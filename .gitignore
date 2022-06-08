@@ -3,4 +3,9 @@
 main.log
 *.bbl
 *.blg
-
+*.tdo
+*.gz
+*.fdb*
+*.aux
+*.out
+*.toc
