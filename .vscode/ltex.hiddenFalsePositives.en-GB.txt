@@ -1,3 +1,0 @@
-{"rule":"OXFORD_SPELLING_Z_NOT_S","sentence":"^\\QThe similarity is determined based on the vectorised filteredtokens.\\E$"}
-{"rule":"OXFORD_SPELLING_Z_NOT_S","sentence":"^\\QThis is accomplished by performing principal component analysis (PCA) on the normalised high-dimensional input vector space to map to a low dimensional space, whilst minimising information loss \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q.\\E$"}
-{"rule":"POSSESSIVE_APOSTROPHE","sentence":"^\\QFurthermore, to avoid falling into the trap of random centroids initialization, which is a major shortcoming of the KMeans method, the clustering was done with KMeans++.\\E$"}
