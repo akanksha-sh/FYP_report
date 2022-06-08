@@ -1,0 +1,6 @@
+*.fls
+\.vscode
+main.log
+*.bbl
+*.blg
+
