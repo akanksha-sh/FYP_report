@@ -1,0 +1,7 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{k}{def} \PYG{n+nf}{get\PYGZus{}sentiment}\PYG{p}{(}\PYG{n}{a}\PYG{p}{):}
+  \PYG{c+c1}{\PYGZsh{} label: 1 \PYGZhy{}\PYGZgt{} positive, 0\PYGZhy{}\PYGZgt{}  negatice}
+  \PYG{k}{if} \PYG{n}{a} \PYG{o}{\PYGZgt{}=} \PYG{l+m+mf}{0.4} \PYG{o+ow}{and} \PYG{n}{a} \PYG{o}{\PYGZlt{}=} \PYG{l+m+mf}{0.6}\PYG{p}{:}
+    \PYG{k}{return} \PYG{l+s+s2}{\PYGZdq{}Neutral\PYGZdq{}}
+  \PYG{k}{return} \PYG{l+s+s2}{\PYGZdq{}Positive\PYGZdq{}} \PYG{k}{if} \PYG{n}{a} \PYG{o}{\PYGZgt{}} \PYG{l+m+mf}{0.6} \PYG{k}{else} \PYG{l+s+s2}{\PYGZdq{}Negative\PYGZdq{}}
+\end{Verbatim}

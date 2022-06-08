@@ -1,0 +1,31 @@
+\contentsline {todo}{\color@fb@x {}{black}{}{lightgray}{\leavevmode {\color {lightgray}o}}\ 1: Background: LDA}{5}{section*.2}%
+\contentsline {todo}{\color@fb@x {}{black}{}{lightgray}{\leavevmode {\color {lightgray}o}}\ 2: https://link.springer.com/content/pdf/10.1186/s13673-019-0192-7.pdf : FOR TF-IDF and BoW}{5}{section*.3}%
+\contentsline {todo}{\color@fb@x {}{black}{}{lightgray}{\leavevmode {\color {lightgray}o}}\ 3: Background: Remove visualisation}{6}{section*.4}%
+\contentsline {todo}{\color@fb@x {}{black}{}{teal}{\leavevmode {\color {teal}o}}\ 4: Add appendix for tag set}{8}{section*.6}%
+\contentsline {todo}{\color@fb@x {}{black}{}{violet}{\leavevmode {\color {violet}o}}\ 5: Write up dependency parsing}{9}{section*.9}%
+\contentsline {todo}{\color@fb@x {}{black}{}{teal}{\leavevmode {\color {teal}o}}\ 6: Add images:maybe}{10}{section*.10}%
+\contentsline {todo}{\color@fb@x {}{black}{}{teal}{\leavevmode {\color {teal}o}}\ 7: Add the document graph}{29}{section*.16}%
+\contentsline {todo}{\color@fb@x {}{black}{}{darkgray}{\leavevmode {\color {darkgray}o}}\ 8: Add explanation}{33}{section*.25}%
+\contentsline {todo}{\color@fb@x {}{black}{}{darkgray}{\leavevmode {\color {darkgray}o}}\ 9: update this!! Now uses std and mean}{34}{section*.26}%
+\contentsline {todo}{\color@fb@x {}{black}{}{darkgray}{\leavevmode {\color {darkgray}o}}\ 10: Maybe add formula for n most repr}{34}{section*.27}%
+\contentsline {todo}{\color@fb@x {}{black}{}{darkgray}{\leavevmode {\color {darkgray}o}}\ 11: talk about diff docuemnt vectors graoh}{34}{section*.28}%
+\contentsline {todo}{\color@fb@x {}{black}{}{purple}{\leavevmode {\color {purple}o}}\ 12: Why use semantic clustering and topic modelling —> topic modelling LDA does not rely on semantic information and so we obtain semantic clusters first.}{34}{section*.29}%
+\contentsline {todo}{\color@fb@x {}{black}{}{purple}{\leavevmode {\color {purple}o}}\ 13: eval table coherence scores}{35}{section*.31}%
+\contentsline {todo}{\color@fb@x {}{black}{}{purple}{\leavevmode {\color {purple}o}}\ 14: APPENDIX POS tages,ENT TYPES }{35}{section*.32}%
+\contentsline {todo}{\color@fb@x {}{black}{}{purple}{\leavevmode {\color {purple}o}}\ 15: Talk min prob and other param??? }{36}{section*.36}%
+\contentsline {todo}{\color@fb@x {}{black}{}{purple}{\leavevmode {\color {purple}o}}\ 16: Either here or somewhere else explain coherence? }{37}{section*.37}%
+\contentsline {todo}{\color@fb@x {}{black}{}{purple}{\leavevmode {\color {purple}o}}\ 17: Make a coherence plot}{37}{section*.38}%
+\contentsline {todo}{\color@fb@x {}{black}{}{purple}{\leavevmode {\color {purple}o}}\ 18: Change TOP 5 based on implementation}{37}{section*.39}%
+\contentsline {todo}{\color@fb@x {}{black}{}{purple}{\leavevmode {\color {purple}o}}\ 19: Change imp to use probs instead of labels}{38}{section*.40}%
+\contentsline {todo}{\color@fb@x {}{black}{}{purple}{\leavevmode {\color {purple}o}}\ 20: Fix highlighted.}{38}{section*.41}%
+\contentsline {todo}{\color@fb@x {}{black}{}{teal}{\leavevmode {\color {teal}o}}\ 21: add stuff}{39}{section*.42}%
+\contentsline {todo}{\color@fb@x {}{black}{}{teal}{\leavevmode {\color {teal}o}}\ 22: Talk about why the pure dependency parsing method did not go well}{40}{section*.43}%
+\contentsline {todo}{\color@fb@x {}{black}{}{teal}{\leavevmode {\color {teal}o}}\ 23: Talk about why these particular regex -how extracted pos- give examples}{41}{section*.44}%
+\contentsline {todo}{\color@fb@x {}{black}{}{teal}{\leavevmode {\color {teal}o}}\ 24: reference of root being a verb}{41}{section*.45}%
+\contentsline {todo}{\color@fb@x {}{black}{}{teal}{\leavevmode {\color {teal}o}}\ 25: Mad convoluted - rewrite}{42}{section*.48}%
+\contentsline {todo}{\color@fb@x {}{black}{}{teal}{\leavevmode {\color {teal}o}}\ 26: Show types of relations extracted with dep parsing and otherwise}{43}{section*.50}%
+\contentsline {todo}{\color@fb@x {}{black}{}{teal}{\leavevmode {\color {teal}o}}\ 27: Talk about the object-relation-subject gotcha.}{43}{section*.51}%
+\contentsline {todo}{\color@fb@x {}{black}{}{teal}{\leavevmode {\color {teal}o}}\ 28: Show some poor relations with said and told}{44}{section*.53}%
+\contentsline {todo}{\color@fb@x {}{black}{}{teal}{\leavevmode {\color {teal}o}}\ 29: Change this based on actual eval done}{45}{section*.54}%
+\contentsline {todo}{\color@fb@x {}{black}{}{teal}{\leavevmode {\color {teal}o}}\ 30: Potentially add the mean median and range of coherence scores}{49}{section*.60}%
+\contentsline {todo}{\color@fb@x {}{black}{}{teal}{\leavevmode {\color {teal}o}}\ 31: Add the cv vs umass here or in topic modelling}{50}{section*.61}%

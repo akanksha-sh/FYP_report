@@ -1,0 +1,68 @@
+% \documentclass[11pt, openany]{book}
+\documentclass[12pt, a4paper, twoside]{report}
+\usepackage[utf8]{inputenc}
+\usepackage{soul,color, float}
+
+\newcommand{\cid}{as16418}
+
+\input{includes}
+
+% \hypersetup{colorlinks=true, linkcolor=blue}
+\begin{document}
+\sloppy
+
+
+\input{sections/front/title}
+\input{sections/front/abstract}
+\input{sections/front/acknowledgements}
+\tableofcontents
+\input{sections/Intro}
+
+\input{sections/background/data_processing}
+\input{sections/background/word_embeddings}
+\input{sections/background/named_entity}
+\input{sections/background/topic_modelling}
+\input{sections/background/visualising}
+\input{sections/background/ethical_considerations}
+
+\input{sections/project/Project Structure}
+\input{sections/project/Topic Extraction Engine}
+\input{sections/project/Relation extraction Engine}
+
+\input{sections/Evaluation}
+\input{sections/Conclusion}
+
+% Include bibliography file
+\newpage
+\renewcommand{\thepage}{}
+\bibliographystyle{IEEEtran}
+\bibliography{IEEEabrv,references}
+
+\input{sections/Appendix}
+\end{document}
+
+% Semantic Analysis of News Corpora 
+% - Topic Modelling
+% - Semantic Relation Extraction
+% - Visualising Tool
+
+
+% Layout:
+
+% - Titlepage + Abstract + Dedications: 3 pages
+% - Intro ~ 1-3 pages
+% - Background~ 17-18 pages
+% - Ethical considerations ~ 1 page
+% - Project Structure (briefly describe each component) ~ 3-4 pages
+%     - Dataset
+%     - System Design 
+%     - Models
+% (incl. eval  ~30)
+% - Processing Data ~ 
+% - Semantic Clustering
+% - Topic Modelling/Extraction
+% - Relation Extraction
+% - Visualisation
+% (either separate evaluation or in each section)
+
+% - Conclusion + Future work ~ 2 pages

@@ -1,0 +1,97 @@
+\babel@toc {english}{}
+\contentsline {chapter}{\numberline {1}Introduction}{5}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Motivation}{5}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Objectives}{5}{section.1.2}%
+\contentsline {section}{\numberline {1.3}Contributions}{5}{section.1.3}%
+\contentsline {chapter}{\numberline {2}Background}{7}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Natural Language Pre-Processing Techniques}{7}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}Tokenisation}{8}{subsection.2.1.1}%
+\contentsline {subsection}{\numberline {2.1.2}Part of Speech (PoS) tagging}{8}{subsection.2.1.2}%
+\contentsline {subsection}{\numberline {2.1.3}Normalisation}{8}{subsection.2.1.3}%
+\contentsline {subsection}{\numberline {2.1.4}Chunking}{9}{subsection.2.1.4}%
+\contentsline {section}{\numberline {2.2}Dependency Parsing}{9}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Coreference Resolution}{9}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}Span detection}{10}{subsection.2.3.1}%
+\contentsline {subsection}{\numberline {2.3.2}Coreference Architecture}{11}{subsection.2.3.2}%
+\contentsline {subsubsection}{Mention-pair architecture}{11}{section*.11}%
+\contentsline {subsubsection}{Mention ranking architecture}{11}{section*.12}%
+\contentsline {section}{\numberline {2.4}Word Representation}{12}{section.2.4}%
+\contentsline {subsection}{\numberline {2.4.1}Types of embeddings}{12}{subsection.2.4.1}%
+\contentsline {subsection}{\numberline {2.4.2}Embeddings from Language Models (ELMo)}{13}{subsection.2.4.2}%
+\contentsline {section}{\numberline {2.5}Named Entity Extraction}{14}{section.2.5}%
+\contentsline {subsection}{\numberline {2.5.1}Named Entity Recognition (NER)}{14}{subsection.2.5.1}%
+\contentsline {subsection}{\numberline {2.5.2}Named Entity Disambiguation (NED)}{15}{subsection.2.5.2}%
+\contentsline {section}{\numberline {2.6}Topic Modelling}{16}{section.2.6}%
+\contentsline {subsection}{\numberline {2.6.1}Main Approaches}{16}{subsection.2.6.1}%
+\contentsline {subsection}{\numberline {2.6.2}Considerations for Topic Modelling}{17}{subsection.2.6.2}%
+\contentsline {section}{\numberline {2.7}Sentiment Analysis}{17}{section.2.7}%
+\contentsline {subsection}{\numberline {2.7.1}Sentiment Analysis Approaches}{18}{subsection.2.7.1}%
+\contentsline {subsection}{\numberline {2.7.2}Considerations in scoring sentiment data}{19}{subsection.2.7.2}%
+\contentsline {section}{\numberline {2.8}Visualising data}{19}{section.2.8}%
+\contentsline {subsection}{\numberline {2.8.1}Data Preparation}{19}{subsection.2.8.1}%
+\contentsline {subsection}{\numberline {2.8.2}Principals of Visualisation}{20}{subsection.2.8.2}%
+\contentsline {chapter}{\numberline {3}Ethical Considerations}{21}{chapter.3}%
+\contentsline {chapter}{\numberline {4}Project Structure}{22}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Preparing Data: DataLoader}{22}{section.4.1}%
+\contentsline {section}{\numberline {4.2}System Design}{23}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Technologies used}{24}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Libraries}{24}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Models}{25}{subsection.4.3.2}%
+\contentsline {subsection}{\numberline {4.3.3}Web deployment}{25}{subsection.4.3.3}%
+\contentsline {chapter}{\numberline {5}Topic Extraction Engine}{26}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Data Processing}{26}{section.5.1}%
+\contentsline {subsection}{\numberline {5.1.1}Coreference Resolution}{26}{subsection.5.1.1}%
+\contentsline {subsection}{\numberline {5.1.2}Cleaning Data}{27}{subsection.5.1.2}%
+\contentsline {subsection}{\numberline {5.1.3}Removing Named Entities}{27}{subsection.5.1.3}%
+\contentsline {subsection}{\numberline {5.1.4}Filtering Tokenised Data}{27}{subsection.5.1.4}%
+\contentsline {section}{\numberline {5.2}Generating Document Vectors}{28}{section.5.2}%
+\contentsline {subsection}{\numberline {5.2.1}Word embedding approaches}{28}{subsection.5.2.1}%
+\contentsline {subsection}{\numberline {5.2.2}Document embeddings}{29}{subsection.5.2.2}%
+\contentsline {section}{\numberline {5.3}Semantic Clustering}{30}{section.5.3}%
+\contentsline {subsection}{\numberline {5.3.1}Dimensionality Reduction}{30}{subsection.5.3.1}%
+\contentsline {subsubsection}{Normalising Data}{30}{section*.17}%
+\contentsline {subsubsection}{Principal Component Analysis}{30}{section*.18}%
+\contentsline {subsection}{\numberline {5.3.2}KMeans Clustering}{31}{subsection.5.3.2}%
+\contentsline {subsubsection}{Method 1: Elbow method}{32}{section*.21}%
+\contentsline {subsubsection}{Method 2: Silhouette score}{32}{section*.23}%
+\contentsline {subsection}{\numberline {5.3.3}Find n most representative docs}{33}{subsection.5.3.3}%
+\contentsline {section}{\numberline {5.4}Topic Modelling}{34}{section.5.4}%
+\contentsline {subsection}{\numberline {5.4.1}Key decisions}{35}{subsection.5.4.1}%
+\contentsline {subsubsection}{Noun-only corpus}{35}{section*.30}%
+\contentsline {subsubsection}{Using N-grams: Bigrams}{35}{section*.33}%
+\contentsline {subsubsection}{Removing Named Entities}{35}{section*.34}%
+\contentsline {subsubsection}{BoW vs TF-IDF}{36}{section*.35}%
+\contentsline {subsection}{\numberline {5.4.2}Implementation: LDA}{36}{subsection.5.4.2}%
+\contentsline {subsection}{\numberline {5.4.3}Parameter tuning}{36}{subsection.5.4.3}%
+\contentsline {subsection}{\numberline {5.4.4}Dominant Topic-Article Mapping}{37}{subsection.5.4.4}%
+\contentsline {subsection}{\numberline {5.4.5}Topic Name Inference}{37}{subsection.5.4.5}%
+\contentsline {subsection}{\numberline {5.4.6}Topic Sentiment}{37}{subsection.5.4.6}%
+\contentsline {chapter}{\numberline {6}Relation Extraction Engine}{39}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Data Pre-Processing}{39}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Motivation}{39}{section.6.2}%
+\contentsline {subsection}{\numberline {6.2.1}Cooccurence Graph}{39}{subsection.6.2.1}%
+\contentsline {subsection}{\numberline {6.2.2}Semantic Triples}{40}{subsection.6.2.2}%
+\contentsline {section}{\numberline {6.3}Key decisions}{40}{section.6.3}%
+\contentsline {subsection}{\numberline {6.3.1}Relation as verb phrases}{40}{subsection.6.3.1}%
+\contentsline {subsection}{\numberline {6.3.2}Subject as entities}{40}{subsection.6.3.2}%
+\contentsline {subsection}{\numberline {6.3.3}Object as noun phrases}{41}{subsection.6.3.3}%
+\contentsline {section}{\numberline {6.4}Implementation}{41}{section.6.4}%
+\contentsline {subsection}{\numberline {6.4.1}Extracting Verb Phrases}{41}{subsection.6.4.1}%
+\contentsline {subsection}{\numberline {6.4.2}Extracting Noun Phrases}{42}{subsection.6.4.2}%
+\contentsline {subsubsection}{Subject phrases}{42}{section*.47}%
+\contentsline {subsubsection}{Get object phrase}{43}{section*.49}%
+\contentsline {subsubsection}{Filtering triples}{44}{section*.52}%
+\contentsline {chapter}{\numberline {7}Evaluation}{45}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Topic Extraction Engine}{45}{section.7.1}%
+\contentsline {subsection}{\numberline {7.1.1}Effect of different processing techniques on clustering}{45}{subsection.7.1.1}%
+\contentsline {subsection}{\numberline {7.1.2}Pre-processing: Filtering on POS tags}{46}{subsection.7.1.2}%
+\contentsline {subsection}{\numberline {7.1.3}Effect of different word embedding techniques on clustering}{48}{subsection.7.1.3}%
+\contentsline {subsection}{\numberline {7.1.4}Effect of pre-processing on topic modelling}{49}{subsection.7.1.4}%
+\contentsline {subsection}{\numberline {7.1.5}Effect of POS on topic modelling}{51}{subsection.7.1.5}%
+\contentsline {section}{\numberline {7.2}Semantic Triple Extraction Engine}{52}{section.7.2}%
+\contentsline {subsection}{\numberline {7.2.1}Entity as Subjects}{52}{subsection.7.2.1}%
+\contentsline {section}{\numberline {7.3}Time ?????????}{52}{section.7.3}%
+\contentsline {section}{\numberline {7.4}User Evaluation}{52}{section.7.4}%
+\contentsline {chapter}{\numberline {8}Conclusion}{53}{chapter.8}%
+\contentsline {section}{\numberline {8.1}Summary of achievement}{55}{section.8.1}%
+\contentsline {section}{\numberline {8.2}Future Work}{55}{section.8.2}%

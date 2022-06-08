@@ -1,0 +1,70 @@
+\section{Visualising data}
+
+
+% https://link.springer.com/content/pdf/10.1007%2F978-3-030-56146-8.pdf
+%-----------------------------------------------------------------------------------------
+\subsection{Data Preparation}
+First and foremost, it is important to understand the goal of the visualisation, what precisely is needed to be visualised and think about what type of data is required for this. This data (news articles) can then be processed to transform and summarise it, extracting key pieces of information that is determined to be essential to the application. This transformed data/ information can then be stored in our desired format and utilised to output the visualisation. 
+
+\subsection{Principals of Visualisation}
+
+\begin{enumerate}
+\item \textbf{Simple}
+It is important to ensure that the visuals are simple and intuitive. The information that is most relevant to the application must be clearly and succinctly visible and organised in a consistent manner. Adding any unnecessary information can make the visualisation convoluted and difficult to understand. \hyperlink{29}{[29]}
+
+\item \textbf{Standard}
+Standardisation of data structure and elements is needed for a good visualisation. This requires handling any complexities and discrepancies in the data as well as eliminating redundancies. Examples of this include, but are not limited to, using common abbreviations, identical scaling, consistent layouts across your data visualizations. \hyperlink{29}{[29]} Additionally, it is important to provide context for these visualisations as well by using standardised labelling and indexing. \hyperlink{30}{[30]}
+
+\item \textbf{Scalable}
+Scalability, in this context, refers to the ability of a visualisation to adjust with the increasing volumes of data seamlessly. This increase should have minimal impact on the speed as well as the performance of the program. Additionally, this also relates how to fit the virtualisation by dynamically scaling it to the virtual space as it grows. \hyperlink{29}{[29]}
+
+\item \textbf{Identify target audience}
+ For the visualisation to be a good representation of the data, it is important to identify the target audience and how they will interact/ use the visual. As mentioned before, exploiting visual details like size, colour, position, font etc can allow for a more intuitive design whilst directing the focus of the users to key bits of information. \hyperlink{30}{[30]}
+
+\item \textbf{Making use of interactivity}
+It can be useful to leverage the interactivity in the visualisation, thereby allowing for a multi-faceted visualisation based on the context that the users choose. For example, if a user wants to the see key news related to the airline industry, the visualisation can zoom in to focus on the part of the visualisation specific to that sector. User interactions should be intuitive and simple so as to not confuse the user and discourage participation. 
+
+\end{enumerate}
+
+
+% \subsection{Future work: Self-Organising Maps}
+
+% Self-organising maps (SOM), also known as Kohonen maps, is a type of neural network that uses unsupervised learning and aims to reduce continuous high multidimensional data onto discrete low dimensional by making use of a feature map and neighboured function based on some metric of similarity. They make use of topographic maps which follow the "principle of topographic map formation" where each new piece of information will be stored in its neighboured (derived from context). Additionally, neurons accessing related information will be stored nearby for quick interactions and updates. \hyperlink{26}{[26]} 
+
+% The SOM algorithm consists of four key stages:\hyperlink{26}{[26]}\hyperlink{27}{[27]}
+
+% \begin{enumerate}
+%     \item \textbf{Initialization: }
+%     This is where all the weights of neurons are initialised with small values that are randomly generated. 
+    
+%     \item \textbf{Competitive stage: }
+%     In this stage, the algorithm picks the best matching or 'winning' neuron by computing a discriminant function. The competitive aspect arises from the fact that the neuron with the smallest value for this function is the 'winning' neuron. Euclidean distance is often picked as the discriminant function. Therefore, for an input vector v, the best matching neuron is the neuron whose weight is the smallest Euclidean distance away. This is generally referred to as Best Matching Unit (BMU). So, for neurons (n) and a randomly drawn input sample v, the BMU can be determined by: \hyperlink{27}{[27]}
+
+%     \begin{center}
+%          $ n_{BMU} = argmin_{n} \left\lVert w_{n} - v \right\rVert $
+%     \end{center}
+
+
+% \item Cooperative stage: 
+%     This stage makes sure that the weights of the neurons in the same neighbourhood have an effect on each other and are not modified independently of one another. Once the winning neuron is established, the weight of this 'winning' neuron is updated. However, now similar updates to the weights of the neighbouring neurons must also be made. This requires a neighbourhood function that gets the topological neighbourhood of a neuron which is centred (symmetrical) around the winning neuron and decays with increasing (lateral) distance. This function $\Lambda$ can be defined as follows: 
+%     \begin{center}
+    
+%         $\Lambda(i, j) = \frac{( \left\lVert r_{i} - r_{j} \right\rVert)^2}{2\sigma^2} $
+        
+%          \end{center}
+         
+%         where  i is the winning neuron and $\left\lVert r_{i} - r_{j} \right\rVert$ is the  lateral (lattice) distance of neuron j from the winning neuron and $\sigma$ is the standard deviation which decays exponentially with time. This is useful as this method is translation invariant. \hyperlink{26}{[26]}\hyperlink{27}{[27]}
+        
+        
+% \item \textbf{Adaptive process: }
+%         In order to get the features mapping the input space to the output space, a learning process is involved. This uses a learning parameter ($\alpha$) that decays over time (iterations/ epochs). From this, the weight rule can be defined as follows:
+        
+%         \begin{center}
+    
+%         $ w_{i} = \alpha (t) \Lambda (i, j, t) (v - w_{i})$
+        
+%          \end{center}
+       
+%       The weight updates will gradually move the winning neuron's (i) weight as well as its neighbouring neurons to be close to the input vector. The closer the neighbouring neuron j to the winning neuron, the greater the change to its weight. Over time/epochs, the radius of the neighbourhood decreases (so the number of neighbours decreases). This is done to promote the learning to have a significant effect on the weights (of neurons) during the initial/early iterations but not allow them to be  influenced by far away neurons in later stages of the training (encouraging convergence) \hyperlink{26}{[26]}
+       
+% \end{enumerate}

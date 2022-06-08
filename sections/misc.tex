@@ -1,0 +1,151 @@
+\section{Knowledge Graphs}
+
+A Knowledge Graph is a semantic graph which consists of nodes (vertices) and directed edges. Entities and/or concepts are represented by nodes. An entity can include a real-world physical object, for instance, a location (e.g. London), person (e.g. Paul McCartney), or an organization (e.g. WHO). Concepts, on the other hand, essentially refers to the general categories (that entities can belong to) such as airlines, websites, etc. \hyperlink{1}{[1]} \\
+
+The edges (directed) in a knowledge graph are representative of the semantic relationships between entities and/or concepts derived by the descriptions of entities which have formal semantics. These descriptions usually highlight the key information about an entity and are interlinked (the description of one entity contributes to another) thereby resulting in the formation a graph.\hyperlink{1}{[1]}
+
+% -------------------------------------------------------------------------
+\subsection{Why are knowledge graphs useful? }
+
+Knowledge graphs construction can be particularly useful as: 
+\chapter{Knowledge stuff}
+\begin{itemize}
+\item They are able to extract information from semi-structured, structured, and/or unstructured data sources, combining knowledge to a well-represented graph structure. \hyperlink{1}{[1]}
+
+\item They incorporate the functionality of multiple storage types. For example, like databases, queries can be used for data retrieval and like knowledge bases, data stored has formal semantics, which can be used to interpret and infer data. \hyperlink{2}{[2]}
+
+\item They can perform logical reasoning/ inference by exploiting graph structure. For instance, by traversing the graph, it can be inferred that C is grandmother of A if B is mother of A and C is mother of B (transitive relations). \hyperlink{2}{[2]}
+
+\end{itemize} 
+
+\subsection{Ontology}
+
+Ontology is a form of semantic knowledge representation. They can be used as a framework to build/ augment a knowledge graph. They model generalised types of objects (concepts, e.g. person), not the specific entities (e.g. Obama). \hyperlink{3}{[3]} \hyperlink{4}{[4]}\\
+
+An ontology comprises of: Distinct types of objects called classes, the properties/ attributes of these classes as well as the relationships between the classes (directed edges). E.g. The class 'Person' has a property 'has\_DoB' and there is a relationship (directed edge) labelled 'has\_DoB' from 'Person' to the class 'Date'.  \hyperlink{4}{[4]}\\
+
+Two extremely common frameworks to model ontology are Resource Description Framework (RDF) and Web Ontology Language (OWL). They are standard frameworks thereby allowing easy exchange/ migration of data. \hyperlink{1}{[1]} \hyperlink{4}{[4]}
+
+\subsection{Triple Store}
+
+There can be different rules for extracting entities and relations from the text (in this case, news articles) which result in the extraction of different types of relationships. A popular method is to use RDF triplestore where each edge (labelled by property and directed) is represented by a subject, predicate, object (s, p, o) triple. The
+predicate represents the property of the subject i.e. the label for the subject to object node relation. This triple represents a knowledge graph embedding. \hyperlink{1}{[1]}\hyperlink{6}{[6]}\\
+
+A set of these
+triples represent an RDF graph, where is constituent of the triple (RDF term) can be of three types: "internationalized resource identifier (IRI \hyperlink{7}{[7]}), literal and blank nodes". The "subject can be an IRI or blank node, the predicate must be an IRI and lastly, an object can be an IRI, a literal or a blank node." \hyperlink{1}{[1](p. 66)}\\
+
+
+%Note: The Internationalized Resource Identifier (IRI) is an internet protocol standard which builds on the Uniform Resource Identifier (URI) protocol by greatly expanding the set of permitted characters.
+
+% file:///Users/aki/Downloads/1-s2.0-S0166361520305558-main.pdf
+
+The RDF store complies with  W3C RDF and SPARQL standards. This is extremely useful as generally RDF triple stores use a query API SPARQL which enables the retrieval of relevant information. \hyperlink{8}{[8]}
+
+% ----------------------------------------------------------------------------------------
+\subsection{Examples of Big Knowledge Graphs}
+
+\begin{itemize}
+% https://link.springer.com/content/pdf/10.1007/s11704-016-5228-9.pdf
+\item Google knowledge graph (GKG):  Google uses GKG to incorporate semantic search functionality into its search engine for topic inference from the search query. It contains over "3.5
+billion facts over 500 million objects/ entities." \hyperlink{1}{[1] p.68}
+
+\item DBPedia: is a crowd-sourced, multilingual knowledge base (RDF) which uses Wikipedia to extract structured data. It has approximately "24.9 million things in 119 languages, with 4.0 million things in English." \hyperlink{1}{[1] p. 68}
+
+\item Wikidata: is a free, multi-lingual, crowd-sourced
+knowledge base, It contains structured data and supports Wikimedia projects. Wikidata has more "than 59 million entities". It has a powerful SPARQL query interface allowing for ad-hoc visualisations. \hyperlink{9}{[9] (p.6)}
+
+\end{itemize}
+
+
+\section{Visualising data}
+
+
+% https://link.springer.com/content/pdf/10.1007%2F978-3-030-56146-8.pdf
+%-----------------------------------------------------------------------------------------
+
+\subsection{Data Preparation}
+First and foremost, it is important to understand the goal of the visualisation, what precisely is needed to be visualised and think about what type of data is required for this. This data (news articles) can then be processed to transform and summarise it, extracting key pieces of information that is determined to be essential to the application. This transformed data/ information can then be stored in our desired format and utilised to output the visualisation. 
+
+\subsection{Considerations in Visualisations}
+When considering visualisations, the
+Seminal theory of Jacques Bertin states that "graphical representation
+is the encoding of components of data by means of visual variables" \hyperlink{28}{[28](p.55)}. These variables include but are not limited to: 'position', 'transparency' (value), 'colour', 'orientation' and 'shape'. They play an important role in indicating the existing relationships between the components of data. 
+
+
+Another major consideration is the scale or the organisation of the visual variables. 
+The levels of organisation of visual variables are characterised by Bertin into four categories in increasing order of organisation: "associative, selective, ordered, and quantitative." \hyperlink{28}{[28](p.59)} These represent the perceptible properties of the visual variables. For instance, shape and colour are associative (lower level of organisation) and time and position are quantitative (high level of organisation). However, both position and colour are highly associative and this associative property of colour with a quantitative variable (position) aids in the abstraction of data components, and so it is commonly benefited from. \hyperlink{28}{[28]} 
+
+Additionally, it is important to ensure that the 'length' of visual variables are at least equal to the different number of distinct components to represent. Otherwise, the distinction between these components may be indiscernible to the user. \hyperlink{28}{[28]}
+
+
+\subsection{Spatialisation}
+
+The concept of Spatialisation in data visualisation refers to the arrangement of "visual objects within display space in a way that the distances between them reflect the degree of similarity between the data items they represent." \hyperlink{28}{[28](p.45)} 
+
+Spatialisation aids in the human perception of visual data objects as it relies on the intuitive concept that data objects that are close together spatially have a higher degree of 'relatedness' than those far away. This degree of similarity is often calculated by some distance function (such as Euclidean distance, Minkowski distance etc.) metric appropriate for the type of data being used. The idea behind this is that the degree of similarity is inversely proportional to the distance. 
+
+A common class of methods of implementing spatialisation is dimentionality reduction algorithms. These algorithms focus on reducing the dimensions of the input data space (often very high) to a smaller lower dimension output space whilst preserving those dimensions with the highest variance (substantial difference). \hyperlink{28}{[28]} One of such methods, Self-Organising Maps is outlined in more detail in Section 2.7.4. 
+
+Spatialisation allows for grouping the data objects based on their similarity and identifying each one of these groups as one unit.
+
+\subsection{Self-Organising Maps}
+
+Self-organising maps (SOM), also known as Kohonen maps, is a type of neural network that uses unsupervised learning and aims to reduce continuous high multidimensional data onto discrete low dimensional by making use of a feature map and neighboured function based on some metric of similarity. They make use of topographic maps which follow the "principle of topographic map formation" where each new piece of information will be stored in its neighboured (derived from context). Additionally, neurons accessing related information will be stored nearby for quick interactions and updates. \hyperlink{26}{[26]} 
+
+The SOM algorithm consists of four key stages:\hyperlink{26}{[26]}\hyperlink{27}{[27]}
+
+\begin{enumerate}
+    \item \textbf{Initialization: }
+    This is where all the weights of neurons are initialised with small values that are randomly generated. 
+    
+    \item \textbf{Competitive stage: }
+    In this stage, the algorithm picks the best matching or 'winning' neuron by computing a discriminant function. The competitive aspect arises from the fact that the neuron with the smallest value for this function is the 'winning' neuron. Euclidean distance is often picked as the discriminant function. Therefore, for an input vector v, the best matching neuron is the neuron whose weight is the smallest Euclidean distance away. This is generally referred to as Best Matching Unit (BMU). So, for neurons (n) and a randomly drawn input sample v, the BMU can be determined by: \hyperlink{27}{[27]}
+
+    \begin{center}
+         $ n_{BMU} = argmin_{n} \left\lVert w_{n} - v \right\rVert $
+    \end{center}
+
+
+\item Cooperative stage: 
+    This stage makes sure that the weights of the neurons in the same neighbourhood have an effect on each other and are not modified independently of one another. Once the winning neuron is established, the weight of this 'winning' neuron is updated. However, now similar updates to the weights of the neighbouring neurons must also be made. This requires a neighbourhood function that gets the topological neighbourhood of a neuron which is centred (symmetrical) around the winning neuron and decays with increasing (lateral) distance. This function $\Lambda$ can be defined as follows: 
+    \begin{center}
+    
+        $\Lambda(i, j) = \frac{( \left\lVert r_{i} - r_{j} \right\rVert)^2}{2\sigma^2} $
+        
+         \end{center}
+         
+        where  i is the winning neuron and $\left\lVert r_{i} - r_{j} \right\rVert$ is the  lateral (lattice) distance of neuron j from the winning neuron and $\sigma$ is the standard deviation which decays exponentially with time. This is useful as this method is translation invariant. \hyperlink{26}{[26]}\hyperlink{27}{[27]}
+        
+        
+\item \textbf{Adaptive process: }
+        In order to get the features mapping the input space to the output space, a learning process is involved. This uses a learning parameter ($\alpha$) that decays over time (iterations/ epochs). From this, the weight rule can be defined as follows:
+        
+        \begin{center}
+    
+        $ w_{i} = \alpha (t) \Lambda (i, j, t) (v - w_{i})$
+        
+         \end{center}
+       
+       The weight updates will gradually move the winning neuron's (i) weight as well as its neighbouring neurons to be close to the input vector. The closer the neighbouring neuron j to the winning neuron, the greater the change to its weight. Over time/epochs, the radius of the neighbourhood decreases (so the number of neighbours decreases). This is done to promote the learning to have a significant effect on the weights (of neurons) during the initial/early iterations but not allow them to be  influenced by far away neurons in later stages of the training (encouraging convergence) \hyperlink{26}{[26]}
+       
+\end{enumerate}
+
+\subsection{Principals of Visualisation}
+
+\begin{enumerate}
+\item \textbf{Simple}
+It is important to ensure that the visuals are simple and intuitive. The information that is most relevant to the application must be clearly and succinctly visible and organised in a consistent manner. Adding any unnecessary information can make the visualisation convoluted and difficult to understand. \hyperlink{29}{[29]}
+
+\item \textbf{Standard}
+Standardisation of data structure and elements is needed for a good visualisation. This requires handling any complexities and discrepancies in the data as well as eliminating redundancies. Examples of this include, but are not limited to, using common abbreviations, identical scaling, consistent layouts across your data visualizations. \hyperlink{29}{[29]} Additionally, it is important to provide context for these visualisations as well by using standardised labelling and indexing. \hyperlink{30}{[30]}
+
+\item \textbf{Scalable}
+Scalability, in this context, refers to the ability of a visualisation to adjust with the increasing volumes of data seamlessly. This increase should have minimal impact on the speed as well as the performance of the program. Additionally, this also relates how to fit the virtualisation by dynamically scaling it to the virtual space as it grows. \hyperlink{29}{[29]}
+
+\item \textbf{Identify target audience}
+ For the visualisation to be a good representation of the data, it is important to identify the target audience and how they will interact/ use the visual. As mentioned before, exploiting visual details like size, colour, position, font etc can allow for a more intuitive design whilst directing the focus of the users to key bits of information. \hyperlink{30}{[30]}
+
+\item \textbf{Making use of interactivity}
+It can be useful to leverage the interactivity in the visualisation, thereby allowing for a multi-faceted visualisation based on the context that the users choose. For example, if a user wants to the see key news related to the airline industry, the visualisation can zoom in to focus on the part of the visualisation specific to that sector. User interactions should be intuitive and simple so as to not confuse the user and discourage participation. 
+
+\end{enumerate}

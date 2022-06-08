@@ -1,0 +1,82 @@
+\section{Topic Modelling}
+
+% https://reader.elsevier.com/reader/sd/pii/S0957417420310149?token=92A0D1D9A754D75A93CFCCCC73D7A93ED7D8A366D40B906DA60A1E44B3B2ADCB28B35A257530B241BF02F5D48485CD47&originRegion=eu-west-1&originCreation=20220123195220 
+Topic modelling is essentially finding patterns in collections of data (in our case, news articles). The motivation behind topic modelling for this project would be to condense the key themes/ topics per industry from vast collections of news articles (grouped by industry). \hyperlink{24}{[24]}
+
+% % https://journals.plos.org/plosone/article/file?id=10.1371/journal.pone.0064846&type=printable
+Topic models are essentially based on Bayesian Networks and "assume that shared global multinomial word distributions (i.e., topic distributions) govern the corpus" \hyperlink{23}{[23](p.2)}.  Each of these documents (news articles) will contribute to the frequencies of a word in a document which is derived from a mixed model of the topic distributions.
+
+\subsection{Main Approaches}
+
+There are 2 main methods for topic modelling: 
+
+\begin{enumerate}
+    \item \textbf{Latent Semantic Indexing (LSA):} often implemented as pLSA (probabilistic Latent Semantic Indexing) works by creating a semantic space from large collections of text. This space is then used can then be used to detect similarity among words, topics, or even entire documents. This semantic space is a large high-dimensional vector and is essentially a term-document matrix (with columns representing documents and rows representing unique words/topics). To reduce the high dimensionality of the vector, often dimensionality reduction methods such as Singular Value Decomposition (SVD) or Principle Component Analysis (PCA) are used. A drawback of LSA is that it makes the orthogonality assumption that each document is about one thing which intuitively is not true for most documents. Another limitation is that these methods may require a way to interpret the high-dimension vector as it has minimal legibility value for humans. \hyperlink{24}{[24]} 
+    
+    \item \textbf{Latent Dirichlet Allocation (LDA):} The other much more popular model is LDA. It is a hierarchical Bayesian model, where each document is modelled as a mixture (multinomial distribution) of topics with each topic itself being a mixture of (multinomial distribution) of words.  \hyperlink{25}{[25]}. It is important to note that each topic can have multiple words, every word in the text corpus is tagged with a single topic. This essentially means that a word's presence can be attributed to one topic's distribution (even though in reality it could be present in the text corpus as a result of multiple topics). 
+    
+    Additionally, LDA ensures sparsity in the underlying multinomial distributions by making use of the Dirichlet prior distribution. This aids in the interpretations of the extracted topics. \hyperlink{23}{[23]}
+    
+    In order to extract the key topics within a volume of data (for the scope of this project, news), some sort of metric is needed to extract the relevance of a topic.   
+One such approach is highlighted in this \hyperlink{23}{paper. [23](p.3)} 
+
+It defines I$_{k}$ (t), the news on a day t associated with a topic k as the  "total numbers of words tagged with topic k on day t". 
+
+\begin{center}
+    $ I_{k} (t) = \sum_{I(t)} \sum_{w} N (d, w, k) $
+\end{center}
+
+where N(d,w,k) represents the frequency of word w (tagged with topic k) in the document d. I(t) is the represents the documents/ news articles obtained on day t. Equation cited from \hyperlink{23}{paper. [23](p.3)} The topics for which $I_{k} (t)$ returns the largest values can be thought of as 'most relevant' for that day. Additionally, the relevance of a topic k over time can also be determined by computing this value for different days (changing t).
+
+    
+\end{enumerate}
+
+\subsection{Considerations for Topic Modelling}
+
+An issue that needs to be considered when extracting topics for large volumes of news articles is that majority of them might have repeated and unwanted phrases such as "Top News" or "Read Similar Articles" that may be extracted as topics even though they have no intuitive relation to the news pertaining to a specific industry. Eliminating these phrases may be computationally heaving and require extensive parsing, as well as require an algorithm that accounts for all variations of such phrases. Therefore, a better approach to avoid this as discussed in \hyperlink{23}{[23]} is to prune topics based on their distributions by focusing on top N (for instance, 6) words associated with a topic distribution and eliminate this topic if any of these N words are in a pre-defined dictionary of words derived from unwanted phrases.
+
+Topics modelling can be used in conjunction with sentiment analysis, whereby a single joint model performs both i.e. extracts topics and sentiments. This idea stems from the notion that every opinion has an associated target (quadruple discussed in Section 2.4).  Based on concepts mentioned earlier, topics modelling can be used to extract aspects which can be topics or sentiments. However, there will be no differentiation between the two. To combat this, some sort of an indicator variable may be used to make that distinction. \hyperlink{16}{[16]}
+
+% --------------------------------------------------------------------------------------------
+\section{Sentiment Analysis}
+
+Sentiment analysis is used to express whether a piece of text (can be about a 'target entity' in the text, topic in the text, a sentence or the whole document) implies a positive, negative or neutral sentiment. Sentiment analysis (or opinion mining) requires extracting the semantic orientation (polarity and strength) of the text. An example of this can be done by assigning a score in the range of [-1,1] where +1 can indicate an (extremely) positive sentiment and -1 can indicate an (extremely) negative sentiment with 0 being neutral. \hyperlink{16}{[16]} \hyperlink{18}{[18]}
+
+It is important to understand the structure of the sentiment (or opinion). Using the definition in this \hyperlink{16}{book [16]}, an 'Opinion' represents a "\textit{quadruple (g, s, h, t) where g is the sentiment target, s is the sentiment of the opinion about the target g,
+h is the opinion holder (the person or organization who holds the opinion), and t is the time when the opinion is expressed.}" Furthermore, g can be split into entity (e) and aspect of entity (a$_{i}$), where each entity can have multiple aspects and the sentiment is based on the aspects of entities and not the entities as a whole. This allows entities to have multi-faceted sentiments. \hyperlink{18}{[18]} 
+
+The main steps of sentiment analysis involve: 
+\begin{enumerate}
+\item Pre-processing the raw text (e.g. news articles) to using techniques such as lemmatisation, Parts-of-Speech Tagging (POS) and Stop Word
+Removal to break down each text document into its components (such as phrases, tokens etc.) \hyperlink{17}{[17]}
+\item Identifying sentiment bearing phrases and assigning it a sentiment score, which can then be combined to assign a multi-layered sentiment.
+\end{enumerate}
+
+For this project, I will do sentiment analysis on each of the key entities in news (pertaining to specific industries.) Therefore, it may be useful to use the notion of subjectivity (strength) and polarity scores at global and entity levels as mentioned in this \hyperlink{22}{[paper. 22]} where world scores use "total references" (denominator) to mean all the references of the entity from a history of news articles (global level) not just those references extracted from processing the news on a single day (entity level).  
+
+In the case of news articles, some of the automatic opinion mining systems can usually associate entities mentioned in the context of negative articles with a negative sentiment even if the entity may have acted positively. For Example, if an airline company was giving out free upgrades to those whose flight got cancelled without notice due to the pandemic, the airline might be associated with a negative sentiment due to the nature of the news (cancelled flights, pandemic) surrounding that airline even though they were being generous to their customers (which would warrant a positive sentiment). Therefore, often, when dealing with sentiment analysis, models consider windows of variable size surrounding these entities as discussed in this \hyperlink{20}{paper [20]} to gauge a better context of the entity for determining the sentiment associated with it.
+
+
+\subsection{Sentiment Analysis Approaches}
+
+Generally, there are two approaches to sentiment analysis: 
+
+\textbf{1. Rule-based sentiment analysis}
+These techniques are rules and dictionary-based. A sentiment reference dictionary that contains keywords phrases labelled by sentiment is used to classify the sentiment of the sentence/text. These scores require rules to ignore or account for sentences (or parts of a sentence) containing negations, dependent clauses or even sarcasm. The advantage of these methods is that they incur less  computation overhead as there is no training needed. However, their drawback is that they often lack context and do not consider semantic relationships thereby resulting in low accuracy. 
+
+\textbf{2. Machine Learning (ML) based sentiment analysis}
+These methods use a machine learning model to classify the sentiment based on words and their lexical ordering by using a labelled-training set (supervised approach). These methods are sensitive to the training data and need to account for class imbalance. This class imbalance can be dealt with by using ensemble methods such as random forests as highlighted in this \hyperlink{18}{paper. [18]}. The advantage with them is that they be customised to the domain.
+
+\subsection{Considerations in scoring sentiment data}
+
+The scoring metric can make of use of techniques like Adverb scoring axioms such as adverbs of degree (AoD) where for example, adverbs such as 'extremely', 'absolutely' and 'hardly' indicate the strength of the sentiment or  Adverb-Adjective combinations (AAC) scoring axioms such as Variable scoring, Adjective priority scoring (APS) as discussed in this \hyperlink{17}{paper. [17]}
+
+
+Generally, it can be seen that phrases separated by 'and' have the same polarity and those separated by 'but' have reverse polarity. 
+
+As mentioned before, it is essential to account for negation and modifiers when assigning the sentiment score, this can be done in an approach described in this paper \hyperlink{22}{[22]} where the polarity of a 'sentiment word' can be flipped if it is negated. For instance, if 'good' has a polarity of +1 , then 'not good' will have negative polarity of -1. Similarly, when accounting for modifier, the strength of the sentiment is altered, so for example, 'extremely good' can have a polarity strength of +2. 
+
+
+Additionally, pronoun resolution can be incorporated as well to get more entity sentiment additional co-occurrence relationships between entity and sentiment compared to the original news article. There is also a need to consider a way to obtain co-reference sets that allow the resolution/aggregation of aliases of entities. E.g. Donald Trump and Donald J. Trump should refer to the same entity. \hyperlink{22}{[22]}
+
+Another potential consideration is the use of duplicate news articles having an effect on the sentiment score. For this reason, the model should eliminate redundancy of articles by not considering those duplicated articles. \hyperlink{22}{[22]} 
