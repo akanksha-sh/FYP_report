@@ -11,3 +11,4 @@ main.log
 *.toc
 .DS_Store
 *.pygtex
+*.pygstyle
