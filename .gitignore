@@ -9,3 +9,5 @@ main.log
 *.aux
 *.out
 *.toc
+.DS_Store
+*.pygtex

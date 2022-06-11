@@ -1,129 +1,153 @@
-\chapter{Relation Extraction Engine}
+\chapter{Semantic Triple Extraction Engine}
 
-This section focuses on the relation extraction engine, covering the journey to the current implementation, focusing on data preparation and the different approaches for extracting semantic triples.
-
-\section{Data Pre-Processing}
-
-Before the relations are extracted from the articles, the articles need to be processed. This involves the coreference resolution and data cleaning to remove stopwords, unnecessary punctuation etc. as discussed in previous sections \ref{coref} and \ref{data_cleaning} respectively. Pre-processing the articles with coreference resolution has the benefit that all the \hl{............}
-
-\todonum[inline]{add stuff}
+\vspace{-2ex}
+This section focuses on the Semantic Triple Extraction Engine, focusing on triple representation and the different approaches of information extraction.
 
 \section{Motivation}
-The motivation behind this \hl{part of the project} was to find a way to extract meaningful information from the article, in particular, information centred around key entities in the article corpus for a certain topic. This subsection covers the two different ideas explored for extracting information from articles. 
-
-\subsection{Cooccurence Graph}
-One of the earlier approaches was to derive a co-occurrence graph from the article corpus (pre-processed with coreference resolution and data cleaning) for a selected topic. This was useful in showing what entities were present and how they connected to one another as shown in \hl{Figure} \ref{coocc}. In order to derive the cooccurence graph, Named Entity Recognition (NER) was used. For each article, the \hl{intro} sentences were extracted and on each sentence NER was performed to extract all relevant entities. The types of entities extracted included but were not limited to, 'GPE', 'PER', 'LOC', 'ORG' etc. and excluded 'DATE', 'MONEY', 'TIME', 'CARDINAL', 'PERCENT' and 'QUANTITY' \hl{(See Appendix for reference)}. As seen in Figure \ref{coocc} in Appendix, the the size of the nodes representing the entities were reflective of the number of co-occurrence links (edges) incident to and from other entities. This was done so that for any given topic the most relevant entities, i.e., mentioned the most in the group of articles representing a topic, was apparent. The \textbf{limitation} of this approach, was that while this was a good indicator of general entities talked about in a topic, the amount of information extracted from the topic article corpus was not sufficient and did not provide any explicit information about \textit{'how'} the entities were related to one another, but rather, just simply, that they were.
-
-\subsection{Semantic Triples}
-In an attempt to extract more 'relevant' information indicative to the content discussed in articles of a given topic, the decision was made to extract semantic triples from article corpus instead of building a cooccurrence graph. 
-This involved finding subject-relation-object triples form the sentences in the article corpora. \hl{??????? better semantic information extraction}
-\todonum[inline]{Talk about why the pure dependency parsing method did not go well}
-The process of extracting these relations involved inferring both syntactic and semantic dependencies between tokens in a sentence, making use tokenisation, dependency parsing,  part-of-speech tagging and named entity recognition.
+The aim of this engine was to find a way to extract meaningful information from the article, in particular, information centred around key entities in the article corpus for a certain topic. One of the earlier approaches was to derive a co-occurrence graph of named entities of type 'GPE', 'PER', 'LOC', 'ORG' etc. (using Fine-Grained NER~\Cref{s:models}) for a topic. The limitation of this approach, was that while it was a good indicator of general entities in a topic, the amount of information extracted from the topic article corpus was not sufficient as no explicit information about \textit{`how'} the entities were related to one another was inferred. In an attempt to extract more 'relevant' information indicative to the content discussed in articles of a given topic, the decision was made to extract semantic triples of type \texttt{subject-predicate-object}. The triple serves as a minimal representation for information in an artcile without losing the context. The process of extracting these relations involved inferring both syntactic and semantic dependencies between tokens in a sentence, making use tokenisation, dependency parsing,  part-of-speech tagging and named entity recognition. These triples would then be displayed as a knowledge graph (Refer to \Cref{Knowledge_graph}) for each topic in a semantic cluster.
 
 \section{Key decisions} \label{key_decisions_rel}
-\hl{In order to capture better nodes and relations, phrases are used instead of words. Given an example of teh sentence in figure, are calling for gives better understanding than calling. Also talk about how the knowledge graph is the goal and in particular we want to see the subject as entities to find out all the information about them in articles in a topic.}
 
-\subsection{Relation as verb phrases}
+In an attempt to capture meaningful nodes (subjects and objects) and relations (predicate), the Semantic Triple Extraction Engine uses phrases instead of words. \Cref{fig:rel_key_decisions} shows the 3 main decisions made for the representation of the triples. 
 
-\subsection{Subject as entities} \label{subject_ents}
-Given that the end goal is to build a knowledge graph, the nodes must have \hl{common entities so that the graph can display all the different triples about an entity and which entities exist in the article corpus of a given topic. Give an example. For example, having two triples one with subject British Airways and other will British Airways spokesperson is not ideal as both triples provide information about the entity British Airways, however, they will be displayed as discrete triples. Instead, splitting the subject phrase as } 
-\subsection{Object as noun phrases}
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.15]{images/relations_kd.png}
+  \caption{Decisions for Extracting Semantic Triples}
+  \vspace{-1ex}
+  \label{fig:rel_key_decisions}
+\end{figure}
 
+\begin{enumerate}
+  \item \textbf{Named Entities as Subjects:} Given that the end goal is to build a knowledge graph (KG) from these triples, there need to be common `subject' nodes in order to infer information about these entities from the articles, link them to other entities in the graph. For example, if the subject requirement is changed from named entities to simply noun phrases, the engine might extract two triples: one with subject `British Airways' and another with `British Airways spokesperson'. This is not ideal as, although both triples provide information about the named entity `British Airways', they will be displayed as discrete triples. Therefore, using `named entities' as subject grounds the KG to a set of named entities, for which information (semantic triples) can be extracted.
+  
+  \item \textbf{Verb Phrases as Predicate:} Based on the success of previous studies ~\cite{verb_relation_extraction}, the engine relies on the verb-based approach for predicate extraction. It aims to extract a single relation embedded in a sentence that consists of a verb phrase sandwiched between two entities of interest. The motivation for using verb phrases as predicate is that it exploits the structured grammar present in news articles where generally the subject is usually a person, organisation, place or thing (hence, the use of named entities) and the predicate indicates what the subject is or does, which often involves a `root verb'. These types of relations subject-verb-object are called SVO triples.
+  
+  \item \textbf{Noun Phrases as Objects:} Finally, having established SVO semantic triples as the output for this engine, the remaining step is to extract the object phrases. As the SVO triples follow a pattern of noun (phrase)-verb-noun (phrase), the object of the triple relies on extracting the noun chunk (using POS tagging) after the verb as the object. 
+  
+\end{enumerate}
 
 \section{Implementation}
 
-The semantic triples need to be of type subject-relation-object triples. The section highlights the how the subject, relation, object phrases were extracted from the articles in order to build a knowledge from these triples. 
+The section highlights the process of extracting the subject, relation, object phrases from the articles in a topic in order for the knowledge graph. 
 
-\subsection{Extracting Verb Phrases}
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.15]{images/ste_imp.png}
+  \vspace{-2ex}
+  \caption{Overview of Semantic Triple Extraction}
+  \label{fig:rel_overview}
+\end{figure}
 
-As mentioned in Section \ref{key_decisions_rel}, the relation phrases would be extracted as verb phrases. First and foremost, the coreference resolved and cleaned articles are split into sentences and the verb phrases are extracted from each sentence. This is done by regex matching of part-of-speech tags as seen below. 
-\begin{minted}{python}
-verb_patterns = [[{'POS':'AUX', 'OP': '?'}, {"POS":"VERB"}, {"POS":"ADP"}], 
-          [{'POS': 'VERB', 'OP': '?'}, {'POS': 'ADV', 'OP': '*'},
-           {'POS': 'VERB', 'OP': '+'}],
-           [{'POS': 'VERB', 'OP': '+'}] ,
-           [{'POS': 'AUX', 'OP': '?'}, {'POS': 'PART', 'OP': '?'},
-           {'POS': 'VERB', 'OP': '+'}]]
+\subsection*{Processing Articles}
+As seen in~\Cref{fig:rel_overview}, before any information extraction, we need to ensure that the data is correctly preprocessed. For this, the coreference resolved, cleaned articles from  \Crefrange{coref}{data_cleaning} are used. This ensures that all pronouns corresponding to the named entities are resolved, allowing more triples to be extracted from the article corpus with named entities as the `subject'. Extracting triples on a `cleaned' article corpus gets rid of unnecessary text, including stopwords, \hl{allowing the model to focus on `semantically rich' words which provide more context in a smaller set of words}. Each topic article then undergoes sentence segmentation (via spaCy \texttt{SentenceSplitter}) to obtain a list of sentences from which triples can be extracted.
+
+\subsection*{Extracting Predicate}
+
+As discussed in \Cref{key_decisions_rel}, the predicate phrases would be extracted as verb phrases. This is done by regex matching of part-of-speech (POS) tags (refer to Appendix \Cref{appendix:pos}) as seen below. 
+
+\begin{minted}[fontsize=\footnotesize, breaklines=True, frame=lines,
+  framesep=1mm, baselinestretch=1.0]{python}
+verb_patterns = [
+  [{'POS':'AUX', 'OP':'?'}, {'POS':'PART', 'OP':'?'}, {'POS':'VERB', 'OP':'+'}, {'POS':'ADP', 'OP':'+'}],
+  [{'POS':'VERB', 'OP':'?'}, {'POS':'ADV', 'OP':'*'}, {'POS':'VERB', 'OP':'+'}]
+  ]
 \end{minted}
 
-\todonum[inline]{Talk about why these particular regex -how extracted pos- give examples}
+% \todonum[inline]{Talk about why these particular regex}
 
-Once the relevant verb phrases in a sentence are extracted, they are filtered to obtain the phrases where the root of the sentence is present. This is done by using dependency parsing through the SpaCy library. Generally, in dependency-based grammars, all words or tokens, in a sentence,  barring one,  are dependant on other words.  This is the root  of the sentence. Most commonly, this word a verb. Therefore, since the scope of relations extracted focuses on the predicate being a verb, we derive the root verb from the dependency tree and filter to get all the verb phrases that contain the root verb. Given the regex pattern matching criteria discussed above, we could have multiple root verb phrases, for example, one with just the root verb (e.g 'calling'), one with the auxiliary verb (e.g. 'are'), root verb (e.g. 'calling') and adposition (e.g. 'for') as shown in Figure \ref{verb_phrases}. In order to extract the most informative coherent relations, the longest verb phrase is selected.  
-\todonum[inline] {reference of root being a verb}
-% Airline unions, along with a bipartisan group of House lawmakers, are calling for an extension of federal aid to prevent an expected wave of layoffs starting in October.
-% [(Airline, 'NOUN'), (unions, 'NOUN'), (,, 'PUNCT'), (along, 'ADP'), (with, 'ADP'), (a, 'DET'), (bipartisan, 'ADJ'), (group, 'NOUN'), (of, 'ADP'), (House, 'PROPN'), (lawmakers, 'NOUN'), (,, 'PUNCT'), (are, 'AUX'), (calling, 'VERB'), (for, 'ADP'), (an, 'DET'), (extension, 'NOUN'), (of, 'ADP'), (federal, 'ADJ'), (aid, 'NOUN'), (to, 'PART'), (prevent, 'VERB'), (an, 'DET'), (expected, 'ADJ'), (wave, 'NOUN'), (of, 'ADP'), (layoffs, 'NOUN'), (starting, 'VERB'), (in, 'ADP'), (October, 'PROPN'), (., 'PUNCT')]
-% [are calling for, are calling, calling for, calling]
+The above regex patterns do not limit the verb phrase to the `VERB' POS tag, but instead account for other relevant information such as auxiliary verbs (`AUX'), adverbs (`ADV') and adposition (`ADP') to be pulled from the sentences as candidate verb phrases in order to retain semantic context. These are then filtered to obtain the phrases where the `root' of the sentence is present. This is done using dependency parsing through the spaCy library. Generally, in dependency-based grammars, all words or tokens, in a sentence,  barring one,  are dependent on other words.  This is the root  of the sentence. Most commonly, this word a verb. Therefore, since the scope of relations extracted focuses on the predicate being a verb, the root verb is derived from the dependency tree and all verb phrases containing the root verb are retained. Given the regex pattern matching criteria discussed above, each sentence might result in multiple root verb phrases, for example, one with just the root verb (e.g 'calling'), one with the auxiliary verb (e.g. 'are'), root verb (e.g. 'calling') and adposition (e.g. 'for') as shown in~\Cref{verb_phrases}. In order to extract the most informative coherent relations, the longest verb phrase is selected. 
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.4]{images/verb_phrases.png}
+\includegraphics[scale=0.35]{images/verb_phrases.png}
 \caption{Verb phrases extracted from an example sentence from article corpora}
 \label{verb_phrases}
 \end{figure}
 
-% \begin{algorithm}
-% \caption{My algorithm}
-% \begin{algorithmic}[1]
-% \Procedure{MyProcedure}{}
-% \State $\textit{stringlen} \gets \text{length of }\textit{string}$
-% \State $i \gets \textit{patlen}$
-% \If {$i > \textit{stringlen}$} \Return false
-% \EndIf
-% \State $j \gets \textit{patlen}$
-% \If {$\textit{string}(i) = \textit{path}(j)$}
-% \State $j \gets j-1$.
-% \State $i \gets i-1$.
-% \State \textbf{goto} \emph{loop}.
-% \State \textbf{close};
-% \EndIf
-% \State $i \gets i+\max(\textit{delta}_1(\textit{string}(i)),\textit{delta}_2(j))$.
-% \State \textbf{goto} \emph{top}.
-% \EndProcedure
-% \end{algorithmic}
-% \end{algorithm}
+\subsection{Extracting Subject and Object}
+As discussed in \Cref{key_decisions_rel}, the `subject' and `object' are noun phrases (NP), particularly entity phrases for `subject'. Therefore, in order to derive these, the `noun chunks' are extracted from the sentence using POS tagging and chunking from the spaCy pipeline. These `noun chunks' are base noun phrases with no nested NP and relative clauses~\cite{spacy} and are returned as a list of \texttt{Spans}~\cite{spacy}, which are essentially slices of the sentence and contain information such as the `start' and `end' position of the sentence `chunk' (phrase). \Cref{alg:subject_relation} outlines the process of extracting the subject and object phrases in the semantic triple.
 
-\subsection{Extracting Noun Phrases}
+\begin{algorithm}[H]
+  \caption{Outline of Triple Extraction Procedure}
+  \label{alg:subject_relation}
+  \begin{algorithmic}   
+  \Function{GetSubjectAndAugmentedPredicate}{$verbPredicate, validEnts, nounPhrases$}
+    \ForAll {$np \in nounPhrases$}
+    
+      \If {$np.start < verbPredicate.start$}
+      \State $ents \gets n.containsAny(validEnts)$ 
+      \Comment{all entities in np}
+        \If {$ents.length == 0$}
+        \State $continue$
+        \EndIf
+      \State $subjectEnt \gets ents.sort(key = lambda \ e: e.start)[0]$
+      \State $remnantNp \gets np.partition(subjectEnt).last$ 
+      \Comment remnant phrase right of subject
+      \State $augmentedPred = remnantNp + verbPredicate $
+      \State $break$
+      \EndIf
+    \EndFor
+    \State \Return $subjectEnt, augmentedPred$
+  \EndFunction
 
-After the extracting the verb phrases for relations, the same is done for noun phrases in the sentences. As discussed in key decisions in order to capture meaningful relation, the model focuses on extracting subjects and objects as nouns. The most common sentence structure follows the dependency of subject-relation-object in that order. Therefore, for the scope of this project, the focus is directed to these types of semantic relations. First and foremost, for each sentence, the noun phrases are extracted in that sentence which uses chunking and POS-tagging exposed by SpaCy. These return a list of \texttt{Spans}, which are essentially slices of the sentence and contain information such as start, end position are of the phrase (slice) in teh sentence. Additionally, for each sentence all the relevant named entities are also extracted using the Fine-Grained NER model. These entities allowed all types such as 'GPE,' 'PER', 'LOC', 'ORG', 'NORP' etc. except for 'DATE', TIME', 'CARDINAL', 'PERCENT' and 'QUANTITY' \hl{(See Appendix for reference)}. This reason for this was the for each article corpus associated with a topic, the aim was to find information about named entities and how they related to one another. In particular, the model enforces the subject node to be about an entity. Therefore, including entity types such as 'DATE' for instance, can result in unnecessary and irrelevant triples with ('two', 'CARDINAL') as the subject node. This is not to say that any information about 'DATE', 'QUANTITY' etc. is completely ignored. Phrases containing these types of entities often show up object nodes when they are reference to a 'valid' subject named entity. 
+  \Function{GetObject}{$verbPredicate, nounPhrases$}
+    \ForAll {$np \in nounPhrases$}
+      \If {$np.start > verbPredicate.start$}
+      \State $object \gets np$ 
+      \State $break$
+      \EndIf
+    \EndFor
+    \State \Return $object$
+  \EndFunction
+\end{algorithmic}
+\end{algorithm}
 
-\textbf{A base noun phrase, or “NP chunk”, is a noun phrase that does not permit other NPs to be nested within it, so no NP-level coordination, no prepositional phrases, and no relative clauses. copied from spacy doc}
+\vspace{-3ex}
+\subsubsection{Subject Entity and Augmented Predicate}
+For the subject phrase, the noun phrases (NP) that occur before (to the left of) the verb phrase (`predicate') as well as contain any of the selected set of named entities, \texttt{valid\_entities}, are chosen as \texttt{subject candidates}. These \texttt{valid\_entities} are derived by performing Named Entity Recognition (NER) on the sentence using the Fine-Grained NER model as detailed in~\Cref{alg:named_ents}. As mentioned previously in~\Cref{s:models}, the model returns 16 semantic types (refer to \Cref{appendix:semantic_types}). Some of these entity types can result in unnecessary and irrelevant triples with, for instance, (`two', \texttt{`CARDINAL'}) as the subject node. Therefore, in a slight adjustment to~\Cref{alg:named_ents}, a set of \texttt{ignore\_entity\_types}, containing \texttt{`DATE', `TIME', `CARDINAL', `PERCENT'} and \texttt{`QUANTITY'}, is passed to omit extracted entities of these types. This does not mean that information about these entities is completely ignored as they are likely to be extracted as object phrases when in reference to a `valid' subject named entity. 
 
-\subsubsection{Subject phrases}
-
-\todonum[inline]{Mad convoluted - rewrite}
-In order to obtain the subject phrases, the noun phrases (returned as a list of Spans) are filtered to obtain those that have a starting position less than the starting position of the verb phrase as seen in line 5 in \ref{subject_phrase}. This essentially results in all noun phrases that are at the left of the root verb phrase. Additionally, as mentioned in Section \ref{subject_ents} since the subject node is enforced to be a valid entity, the noun phrases are filtered to obtain candidate subject phrases (\texttt{valid\_ents}) that mention a valid entity from the ones extracted from the sentence. From these candidate subject phrases, we obtain the first occurring (based on position of span) qualifying phrase as the subject phrase (lines 9-10). As seen in \ref{subject_phrase} on line 11, once the first qualifying phrase (i.e. entity) is found, the subject noun phrase is split to obtain the entity (which is the subject)  and the remnant phrase which gets prepended to the verb phrase to form the updated relation phrase. This way the information conveyed by the noun phrase is conserved but the subject nodes are maintained as an entity so a connected knowledge graph can be formed indicating the entity as the subject and showing relationships between these entities and relationships to other object nodes. 
-
-\begin{listing}[H]
-\caption{Get subject and relation}
-\label{subject_phrase}
-\begin{minted}[linenos]{python}
-def get_subject_relation(verb_phrase, noun_phrases, ents):
-  subject = None
-  relation = None
-  for n in noun_phrases:
-    if n.start < verb_phrase.start:
-      valid_ents = [(i,n.text.find(i)) for i in ents if n.text.find(i) != -1]
-      if len(valid_ents) == 0:
-        continue
-      valid_ents.sort(key=lambda tup: tup[1])
-      subject = valid_ents[0][0]
-      relation = n.text.partition(subject)[2].strip() + ' ' + verb_phrase.text
-      break
-  return subject, relation
-\end{minted}
-\end{listing}
+Of the \texttt{subject candidates}, the first occurring (based on position of \texttt{Span}) is selected as the subject phrase. As mentioned \Cref{key_decisions_rel}, the aim is to have just the named entity as the `subject' to facilitate connectivity of triples in the KG. However, we do not lose the other semantic information in the subject phrase. Therefore, the subject phrase is split into the entity and the remnant phrase \textit{after} the entity, which is then prepended to the predicate. This way the information conveyed by the noun phrase is conserved, but the subject nodes are maintained as an entity. For example, for the triples: \texttt{(`Transat investors', `choose receiving', `cash payment')} and \texttt{(`Transat', `to become part of', `Air Canada')}, splitting the $1^{st}$ triple's subject to get `Transat' and `investors' and augmenting the predicate with the latter to get the updated triple: (`Transat', `investors choose receiving', `cash payment'). \Cref{fig:transat_before} and \Cref{fig:transat_after} show the KG snippet for these triples before and after splitting the subject phrase respectively.
+  
+\begin{figure}[H]
+  \begin{minipage}{0.4\linewidth}
+  \centering
+  \includegraphics[width=\linewidth]{images/kg_transat.png}
+  \caption{KG snippet before predicate augmentation}
+  \label{fig:transat_before}
+  \end{minipage}
+  \hfill
+  \begin{minipage}{0.4\linewidth}
+  \centering
+  \includegraphics[width=\linewidth]{images/kg_transat_correct.png}
+  \caption{KG snippet after predicate augmentation}
+  \label{fig:transat_after}
+  \end{minipage}
+\end{figure}
 
 \subsubsection{Get object phrase}
-The object phrase is also derived from the noun chunks in the sentence but instead of filtering the noun phrases occuring before the root verb phrase, the candidate object phrases obtained by finding all noun phrases (spans) where their starting position in the sentence is after the root verb phrase.
+Getting the object is fairly simple as shown in \Cref{alg:subject_relation} and involves getting the first (closest in position) `noun phrase' after the `predicate' (the longest root verb phrase).
+
+\subsubsection{Post-processing}
+Once the semantic triples are obtained from the article corpus for each topic, the triples are filtered. After ensuring the that all components of the triple are not null, the triples where the relations/predicates contains words like "said" and "told" in their different forms are filtered. This is done because, often in news articles, direct quotes are made by entities and the relation extraction engine retrieves some poor relations that do not add to the quality of the relations extracted for a particular entity. Furthermore, in order to ensure conciseness of the triples and eliminate redundancy, any common substring (likely to occur from noun phrase chunking and verb phrase regex matching) is eliminated by calculating the \hl{longest common substring containing complete words} between the subject and object as well as (augmented) predicate and object and removing it from the object phrase. 
+
+
+\section{Results and Discussion}
+
+Once the qualifying semantic triples for each topic are obtained, these are passed to the visualisation engine. An example of the semantic relations extracted for the topics for a given cluster in Business 2021 is shown in \hl{Figure ??}
+
+% \todonum[inline]{Show types of relations extracted with dep parsing and otherwise}
+% \todonum[inline]{Talk about the object-relation-subject gotcha.}
 
 This particular method avoids the stringent dependency of the "subject" and "object" phrases on their actual dependency positions in the grammar, This is because given the nature of news articles, the sentence structure is relatively complex with several different subjects and objects. For the knowledge graph, ultimately, the relations extracted need to focus around different named entities. Relying on the dependency grammar structure to find the subject and object dos not hold as in a given sentence, the structure of the sentence heavily influences the information extracted. This means that more often than not, relevant information about entities is lost due to the entity not necessarily having one of \texttt{"nsubj", "csubj", "nsubjpass",	"csubjpass"} as the dependency. 
 
-\todonum[inline]{Show types of relations extracted with dep parsing and otherwise}
-\todonum[inline]{Talk about the object-relation-subject gotcha.}
+\subsection*{Limitations}
+verb-based approaches can only extract a
+single relation embedded in a sentence composed of a verb
+phrase sandwiched between two entities of interest. 
+However, current verb-based approaches can only extract a
+single relation embedded in a sentence composed of a verb
+phrase sandwiched between two entities of interest. 
 
-\subsubsection{Filtering triples}
-Once the semantic triples are obtained from the article corpus for each topic, the triples are filtered. After ensuring the that all components of the triple are not null, the triples where the relations/predicates contains words like "said" and "told" in their different forms are filtered. This is done because, often in news articles, direct quotes are made by entities and the relation extraction engine retrieves some poor relations that do not add to the quality of the relations extracted for a particular entity \hl{as seen in Figure} !!!! 
 
-\todonum[inline]{Show some poor relations with said and told}
 
-Once the qualifying semantic triples for each topic are obtained, these are passed to the visualisation engine. An example of the semantic relations extracted for the topics for a given cluster in Business 2021 is shown in \hl{Figure ??}

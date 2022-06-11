@@ -11,11 +11,11 @@ In this section, the main body of work is evaluated based on objectives defined 
 
 \todonum[inline]{Change this based on actual eval done}
 
-\section{Topic Extraction Engine}
+\section{Topic Extraction Engine} \label{s:evaluation_topic_extraction}
 
 \subsection{Effect of different processing techniques on clustering} \label{s:preprocess_clustering}
 
-In order to cluster the news articles, different pre-processing techniques were applied to the article corpora in the topic extraction engine. The motivation behind this was to gauge the effect of these techniques on the silhouettes scores and incorporate the techniques that the result in the most optimal scores indicating improved clustering. As discussed in Section \ref{procesing_topic}, the article corpora are pre-processed using techniques such as coreference resolution (CR), removing stopwords, removing named entities before obtaining article vectors for clustering. Figure \ref{fig:pre-processing_sil} illustrates how omitting these different pre-processing techniques affects the silhouette score of the semantic clustering obtained for the Year-Category data group: Travel 2021. We can see that not doing any pre-processing (`No pre-processing') on the articles in Travel 2021 data group results in a poor silhouette score of 0.36 compared to `All', which results in a silhouette score of 0.691 and involves performing coreference resolution, named entity removal and stopword removal. The silhouette score of 1 indicates dense, nicely separated clusters, a score of 0 indicates that clusters are overlapping, or distance between them is insignificant and -1 indicates incorrect clustering. Figure  \ref{fig:pre-processing_sil} shows that omitting these pre-processing techniques deteriorates the quality of clustering, by resulting in poor silhouette scores which indicate overlapping clusters.
+In order to cluster the news articles, different pre-processing techniques were applied to the article corpora in the topic extraction engine. The motivation behind this was to gauge the effect of these techniques on the silhouettes scores and incorporate the techniques that the result in the most optimal scores indicating improved clustering. As discussed in Section \ref{s:procesing_topic_engine}, the article corpora are pre-processed using techniques such as coreference resolution (CR), removing stopwords, removing named entities before obtaining article vectors for clustering. Figure \ref{fig:pre-processing_sil} illustrates how omitting these different pre-processing techniques affects the silhouette score of the semantic clustering obtained for the Year-Category data group: Travel 2021. We can see that not doing any pre-processing (`No pre-processing') on the articles in Travel 2021 data group results in a poor silhouette score of 0.36 compared to `All', which results in a silhouette score of 0.691 and involves performing coreference resolution, named entity removal and stopword removal. The silhouette score of 1 indicates dense, nicely separated clusters, a score of 0 indicates that clusters are overlapping, or distance between them is insignificant and -1 indicates incorrect clustering. Figure  \ref{fig:pre-processing_sil} shows that omitting these pre-processing techniques deteriorates the quality of clustering, by resulting in poor silhouette scores which indicate overlapping clusters.
 
 \begin{figure}[H]
 \centering
@@ -127,9 +127,7 @@ The stopwords that are removed in pre-processing contain around 326 words provid
 
 Similarly for named entity removal, the aim is to find distinct topics within a cluster that are not dependant on the named entities. For instance, in the input data there are several articles that mention \qs{British Airways} and there are articles cover latent topics such as \qs{pandemic} and \qs{pilot unions}. For arguments sake, let's presume that there is a huge overlap between \qs{pilot unions} and \qs{British Airways}. Retaining named entities in the input corpus would result in \qs{British Airways} the model selecting British Airways as a topic instead of 'pilot unions'. 
 
-\todonum[inline]{Add the cv vs umass here or in topic modelling}
-
-\subsection{Effect of POS on topic modelling}
+\subsection{Effect of POS on topic modelling} \label{s:pos_topic}
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.7\linewidth]{images/eval/pos_coherence.png}
@@ -137,12 +135,12 @@ Similarly for named entity removal, the aim is to find distinct topics within a 
 \label{fig:pos_topic}
 \end{figure}
 \vspace{-1em}
-The filtered tokens list (for each article) that was used to generate the article vectors for clustering, was passed to the LDA model to extract topics from each of the semantic clusters for a Year-Category group. In order to determine the quality of topics extracted, the coherence score measure is used. From Figure \label{fig:preprocess_topic}, it is apparent that the noun only tokens approach to extract tokens performs better than when noun, adjectives, verbs and adverbs are used as the average coherence scores are generally higher for the former approach. Across all the data groups, we see an average coherence score improvement of 18.2\% with the noun only topic extraction approach.  
+The filtered tokens list (for each article) that was used to generate the article vectors for clustering, was passed to the LDA model to extract topics from each of the semantic clusters for a Year-Category group. In order to determine the quality of topics extracted, the coherence score measure is used. From~\Cref{fig:pos_topic}, it is apparent that the noun only tokens approach to extract tokens performs better than when noun, adjectives, verbs and adverbs are used as the average coherence scores are generally higher for the former approach. Across all the data groups, we see an average coherence score improvement of 18.2\% with the noun only topic extraction approach.  
 
 
-\section{Semantic Triple Extraction Engine}
+% \section{Semantic Triple Extraction Engine}
 
-\subsection{Entity as Subjects}
+% \subsection{Entity as Subjects}
 
 \section{Time ?????????}
 
@@ -193,7 +191,7 @@ The filtered tokens list (for each article) that was used to generate the articl
 \end{tabularx}
 
 \caption{E-}
-\label{table:word_embed}
+\label{table:cputime}
 \end{table}
 
 \section{User Evaluation} \label{s:user_eval}
