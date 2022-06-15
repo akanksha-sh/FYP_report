@@ -1,10 +1,10 @@
-\chapter{Semantic Triple Extraction Engine}
+\chapter{Semantic Triple Extraction Engine}  \label{ch:5:triple}
 
 \vspace{-2ex}
 This section focuses on the Semantic Triple Extraction Engine, focusing on triple representation and the different approaches of information extraction.
 
 \section{Motivation}
-The aim of this engine was to find a way to extract meaningful information from the article, in particular, information centred around key entities in the article corpus for a certain topic. One of the earlier approaches was to derive a co-occurrence graph of named entities of type 'GPE', 'PER', 'LOC', 'ORG' etc. (using Fine-Grained NER~\Cref{s:models}) for a topic. The limitation of this approach, was that while it was a good indicator of general entities in a topic, the amount of information extracted from the topic article corpus was not sufficient as no explicit information about \textit{`how'} the entities were related to one another was inferred. In an attempt to extract more 'relevant' information indicative to the content discussed in articles of a given topic, the decision was made to extract semantic triples of type \texttt{subject-predicate-object}. The triple serves as a minimal representation for information in an artcile without losing the context. The process of extracting these relations involved inferring both syntactic and semantic dependencies between tokens in a sentence, making use tokenisation, dependency parsing,  part-of-speech tagging and named entity recognition. These triples would then be displayed as a knowledge graph (Refer to \Cref{Knowledge_graph}) for each topic in a semantic cluster.
+The aim of this engine was to find a way to extract meaningful information from the article, in particular, information centred around key entities in the article corpus for a certain topic. One of the earlier approaches was to derive a co-occurrence graph of named entities of type 'GPE', 'PER', 'LOC', 'ORG' etc. (using Fine-Grained NER~\Cref{s:models}) for a topic. The limitation of this approach, was that while it was a good indicator of general entities in a topic, the amount of information extracted from the topic article corpus was not sufficient as no explicit information about \textit{`how'} the entities were related to one another was inferred. In an attempt to extract more 'relevant' information indicative to the content discussed in articles of a given topic, the decision was made to extract semantic triples of type \texttt{subject-predicate-object}. The triple serves as a minimal representation for information in an article without losing the context. The process of extracting these relations involved inferring both syntactic and semantic dependencies between tokens in a sentence, making use tokenisation, dependency parsing,  part-of-speech tagging and named entity recognition. These triples would then be displayed as a knowledge graph (Refer to \Cref{Knowledge_graph}) for each topic in a semantic cluster.
 
 \section{Key decisions} \label{key_decisions_rel}
 
@@ -33,7 +33,7 @@ The section highlights the process of extracting the subject, relation, object p
 
 \begin{figure}[H]
   \centering
-  \includegraphics[scale=0.15]{images/ste_imp.png}
+  \includegraphics[scale=0.17]{images/ste_imp.png}
   \vspace{-2ex}
   \caption{Overview of Semantic Triple Extraction}
   \label{fig:rel_overview}
@@ -65,7 +65,7 @@ The above regex patterns do not limit the verb phrase to the `VERB' POS tag, but
 \label{verb_phrases}
 \end{figure}
 
-\subsection{Extracting Subject and Object}
+\subsection*{Extracting Subject and Object} \label{extracting_subj_obj}
 As discussed in \Cref{key_decisions_rel}, the `subject' and `object' are noun phrases (NP), particularly entity phrases for `subject'. Therefore, in order to derive these, the `noun chunks' are extracted from the sentence using POS tagging and chunking from the spaCy pipeline. These `noun chunks' are base noun phrases with no nested NP and relative clauses~\cite{spacy} and are returned as a list of \texttt{Spans}~\cite{spacy}, which are essentially slices of the sentence and contain information such as the `start' and `end' position of the sentence `chunk' (phrase). \Cref{alg:subject_relation} outlines the process of extracting the subject and object phrases in the semantic triple.
 
 \begin{algorithm}[H]
@@ -125,6 +125,7 @@ Of the \texttt{subject candidates}, the first occurring (based on position of \t
   \end{minipage}
 \end{figure}
 
+\vspace{-4ex}
 \subsubsection{Get object phrase}
 Getting the object is fairly simple as shown in \Cref{alg:subject_relation} and involves getting the first (closest in position) `noun phrase' after the `predicate' (the longest root verb phrase).
 
@@ -134,20 +135,36 @@ Once the semantic triples are obtained from the article corpus for each topic, t
 
 \section{Results and Discussion}
 
-Once the qualifying semantic triples for each topic are obtained, these are passed to the visualisation engine. An example of the semantic relations extracted for the topics for a given cluster in Business 2021 is shown in \hl{Figure ??}
-
 % \todonum[inline]{Show types of relations extracted with dep parsing and otherwise}
 % \todonum[inline]{Talk about the object-relation-subject gotcha.}
 
-This particular method avoids the stringent dependency of the "subject" and "object" phrases on their actual dependency positions in the grammar, This is because given the nature of news articles, the sentence structure is relatively complex with several different subjects and objects. For the knowledge graph, ultimately, the relations extracted need to focus around different named entities. Relying on the dependency grammar structure to find the subject and object dos not hold as in a given sentence, the structure of the sentence heavily influences the information extracted. This means that more often than not, relevant information about entities is lost due to the entity not necessarily having one of \texttt{"nsubj", "csubj", "nsubjpass",	"csubjpass"} as the dependency. 
+This advantage of using the approach discussed in \Cref{extracting_subj_obj} to extract the semantic triples is that it avoids the stringent dependency of the `subject' and `object' phrases on their actual dependency tags in the dependency grammar (See \Cref{dependency_grammar}), instead using dependency parsing only to extract the root verb in the sentence, and getting the subject and object based on the position of `noun chunks' before and after the root verb. An alternate approach was tried relying on the dependency grammar structure to find the subject and object does not always yield great results as in a given sentence, the structure of the sentence heavily influences the information extracted. For the knowledge graph, ultimately, the relations extracted need to focus around different named entities. This means that more often than not, relevant information about entities is lost due to the `named entity' not necessarily having one of \texttt{`nsubj', `csubj', `nsubjpass',	`csubjpass'} as the dependency tag and alternatively having \texttt{`obj', `dobj'} etc. as the dependency tag (See Appendix \Cref{appendix:deps}). The dependency sentence structure is commonly of type `subj'-`verb'-`obj' or `obj'-`verb'-`subj. This approach accommodates both as it only enforces that the semantic triple `subject' is a named entity and can have either `subj' \hl{(or related?)} or `obj' \hl{(or related?)} as the dependency tag. 
+
+
+
+\subsubsection*{Knowledge graph of Semantic Triples}
+
+After extracting the qualifying semantic triples for each topic (in cluster), a Knowledge Graph of these triples is generated by the visualisation tool. \Cref{fig:triples_travel2021} shows the KG for Cluster 1 in Travel 2021 (See \Cref{fig:topics_travel2021}) which has a single topic `tourism, reopening, government'. 
+
+\vspace{-1ex}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.94\linewidth]{images/travel2021_triples_witha.png}
+  \caption{Knowledge Graph for topic `tourism, reopening, government' in Cluster 1 in Travel 2021}
+  \vspace{-1ex}
+  \label{fig:triples_travel2021}
+\end{figure}
+
+\Cref{fig:triples_travel2021} shows the Knowledge Graph generated by the visualisation tool for the Cluster 1 (C1) which has a single topic `tourism, reopening, government'. The `subject' named entities are in orange, the `object' noun phrases are in green (indicating `positive' sentiment) or red (indicating `negative' sentiment) and the lines joining these represent the predicate. Clicking on the predicate gives shows the entire semantic triple (and the corresponding `triple sentiment') as well as the article (and the article `sentiment') from which the triple was extracted. The size of a node is determined by the degree of edges incident upon the node which makes it easier to identify the key entities in a topic. For example, we see that the `Hawaii Tourism Authority', `U.S.' and `Maui' have more triples associated with them as opposed to `Portugal', making the former nodes bigger and therefore,  stand out more visually. Additionally, we can see that the interconnectivity of the nodes with the example of `Maui' and `Kahului' which both share the `object' node `New Tax Tourists'. These gives us the insight that both `Maui' and `Kahului' which are islands in Hawaii have implemented a new tourist tax, which is further implied at by the triple: `Hawaii Tourism Authority' $\rightarrow$ `allocates'  $\rightarrow$ `tourism tax revenue by county'.
+
+As mentioned prior, the colour of nodes is a representation of the sentiment of the triple. This may not always coincide with the sentiment of the article. The motivation for this was to see the general sentiment surrounding an entity which can come from the entity being mentioned in different contexts in multiple articles. For instance, the `European Union has a `positive' sentiment associated with it as the information we have on it is that EU countries allowed `American tourists'. An important thing to note is that the sentiment is quite context dependent, so for example, going back to the triples `Maui' $\rightarrow$ `seeks'  $\rightarrow$ `new tax tourists' and `Kahului' $\rightarrow$ `moving quickly to implement' $\rightarrow$ `new tax tourists', the former has a `negative' (note the red `predicate' line joining the nodes) sentiment while the latter has a `positive' sentiment associated to it. This is because `seeking tax' presents negative connotations whilst `moving quickly to implement' has connotations of efficiency and vigour which are positive.
+
 
 \subsection*{Limitations}
-verb-based approaches can only extract a
-single relation embedded in a sentence composed of a verb
-phrase sandwiched between two entities of interest. 
-However, current verb-based approaches can only extract a
-single relation embedded in a sentence composed of a verb
-phrase sandwiched between two entities of interest. 
 
+One of the main limitations of our implementation of semantic triple extraction is that, given it is a verb-based approach, it extracts a single relation embedded in a sentence composed of a (root) verb phrase sandwiched between two entities of interest. 
+Given the nature of news articles, the sentence structure is relatively complex with several subjects and objects in a single subject, often trying the maximise information extraction from a single sentence can lead to redundancies and incoherent semantic triples. Therefore, the focus of this model was that it aims to extract a single relation in a sentence provided the sentence mentioned a named entity. 
 
+Another limitation of the engine comes from the performance of the spaCy library used for sentence segmentation, POS tagging, dependency parsing as well as the state-of-the-art AllenNLP models: SpanBERT for coreference resolution, Fine-grained Named Entity Recognition and RoBERTa Stanford Sentiment Treebank (See \Cref{s:models}) used for resolving coreferences in the article corpus in preprocessing, extracting the named entities from the sentences for the `subject' node and performing sentiment analysis on the articles, topics and triples respectively. The performance of these models have a huge effect in the performance of the Relation Extraction Engine. 
 

@@ -1,11 +1,53 @@
 \chapter{Introduction}
+\vspace{-2ex}
 
-In today's fast-growing economy, there is an incomprehensible amount of information from a host of different sources readily available at our disposal. This can be extremely overwhelming and difficult to navigate. There is a need for a concise and digestible medium of information that allows the consumer to gain insight into the major themes and events of the moment, how they relate to one another, and how they are likely to affect key industry players by means of data visualisation. Data visualisation can help make the data more accessible and available. \\
+In today's fast-growing, data-driven economy, there is an incomprehensible amount of information available at our disposal. Several thousand articles are published daily made available through a host of different online sources. For an average consumer, this can be extremely overwhelming and difficult to navigate. This poses a need for a concise and digestible medium of information that allows consumers to acquire insight into significant themes, events, and entities around their areas of interest, perhaps throughout a specific time period, without having to wade through reams of superfluous articles. This prompts performing semantic analysis on the news articles, in order to extract relevant and distilled information from the news corpora. 
 
-This project tries to solve this problem of information overload in the business and industry sectors (such as airline, energy and pharmaceutical industry) by providing a visualisation tool that dynamically depicts how the main contributors (companies, people, events) within an industry are affected by the news and what the general sentiment surrounding these contributors are. \\
+\section{Motivation}
 
-Such a product has great value and interest for not only the average civilian who does not want to sift through reams of news to gain a core insight into the developments within an industry but also for the businesses that want to obtain an intelligent overview of workings within specific industries. \\
+Information extraction or retrieval from online news corpora is huge area of research in the natural language processing (NLP) community. With an overwhelming amount of information at disposal, the main task in information extraction entails automatic extraction of structured information such as entities, relationships between entities, etc., from unstructured sources through syntactic parsing, which exploits the structure of the natural language model focusing on lexical meaning and part-of-speech, and semantic analysis, which features the meaning of text in the corpus~\cite{global_ents_intro}~\cite{sarawagi_info}. Early works in this area involved performing identification and temporal analysis of named entities, such as persons, organisations etc. and their co-occurrence in news articles~\cite{sarawagi_info}~\cite{intro_semntic_analysis_news}, event detection~\cite{finance}~\cite{finance_events} and information distillation by news summarisation, sentence relevance identification~\cite{news_info_extract}~\cite{summary_generation_intro}. A more interesting way of extracting information involves generating semantic triples of type (subject, predicate, object) from news articles to generate a knowledge graph, which provides the benefit acting as a minimal representation of the information presented in news articles, whilst still retaining sufficient context. Previous works on this approach, however, rely on using ontologies and augmenting existing knowledge bases for triple extraction, making them domain-dependant~\cite{wu2020knowledge}. Our work explores the domain-independent approach which uses the rich morpho-syntactic marking system of English (verb inflections, clausal markers, nominal case)~\cite{tseng2014chinese} to identity the syntactic structure of triples. 
 
+Another prevalent area of research in semantic analysis of news articles follows topic modelling, which involves extracting latent topics from the news article corpora using multinomial distributions over a fixed vocabulary~\cite{nouns_only_lda}. The motivation for this stems from extracting common themes in large corpus of articles and is often combined with the another NLP approach: sentiment analysis, to provide an insight into the sentiment surrounding the latent topics. Common approaches for this include using Latent Dirichlet Allocation (LDA) and Latent Semantic Analysis (LSA) models. Alternatively, clustering methods are also quite common to group articles into topics in an attempt to achieve a high-level similarity clusters of articles~\cite{clustering_intro} that rely more heavily on the semantic meaning of the words rather than probabilistic distributions of keywords (as seen in LDA). 
+
+% knowledge distallition 
+% lexico-semantic 
+\section{Objectives} \label{objectives}
+
+Our work draws on the semantic analysis techniques discussed above to provide a semantic analysis engine, with the aim to help alleviate information overload by distilling the knowledge extracted from the news corpora (into topics and corresponding triples) associated with a given sector, which for the scope of this project, is the airline industry. The objectives for constructing the semantic analysis engine are as follows: 
+
+% that groups semantically similar articles and extracts latent topics (and associated sentiment) to indicate key themes in the clustered article corpus. Additionally, it extracts semantic triples from each of these latent topics in the semantic clusters to provide an overview of the entities, their relationships, the general sentiment around events and news surrounding them.
+
+
+\begin{enumerate}
+    \item \textbf{Cluster articles based on the semantic similarity of their text.} Vectorise articles experimenting with different embeddings and vectorisation techniques in order to generate semantic document vectors which can be clustered using KMeans.  
+
+    \item \textbf{Topic Modelling on semantic clusters to obtain information on latent topics.} Generate latent topic models to indicate key themes in the clustered article corpus, experimenting with different processing techniques on the input corpus to improve coherence of the latent topic models.
+
+    \item \textbf{Extraction of semantic triples for each topic in cluster.} Extract semantic triples to provide an overview of the entities, their relationships, the general sentiment around events and news surrounding them.
+
+    \item \textbf{Visualisation of results from information extraction} Display the results of the information extracted from the semantic analysis, semantic clusters, latent topics and triples extracted in a cohesive visualisation.  
+    
+\end{enumerate}
+
+\section{Contributions} \label{contributions}
+
+This project focuses on building a cohesive semantic analysis tool, that incorporates the different semantic approaches and has the following contributions: 
+ 
+\begin{enumerate}
+    \item \textbf{Topic Extraction Engine:} A novel engine involves semantic clustering of news articles based experimenting with different document vector generation approaches, using KMeans as the clustering technique. The resultant semantic clusters then undergo topic modelling to insight into the topics and their associated articles, sentiment to a category of input data (See~\Cref{ch:4:topic}).
+
+    \item \textbf{Semantic Triple Extraction Engine:} The engine focuses on extracting semantic triples of type (subject $\rightarrow$ predicate $\rightarrow$ object) focusing the on the named entities and information surrounding them, inferring the average sentiment of the entity (See~\Cref{ch:5:triple}).
+  
+    \item \textbf{Visualisation Tool:} A web-based application responsible for illustrating the results from the Topic Extraction Engine and Semantic Triple Extraction Engine in a coherent and cohesive visualisation by making use of circle packing topic cluster diagram and a knowledge graph respectively. 
+
+
+\end{enumerate}
+
+
+Such a product has great value and interest for not only the average consumer who does not want to sift through reams of news to gain a core insight into the developments within an industry but also for the businesses that want to obtain an intelligent overview of workings within specific industries.
+
+% way of evaluation 
+% ----------------------------------------
 
 % The general idea in modelling this 'visualiser' entails a multitude of tasks. First of which, is identifying the key entities in relation to an industry by making use of entity extraction and building entity-relationship ontologies. These can be derived from large open-source knowledge bases (or knowledge graphs) such as Wikidata by leveraging the knowledge graph embeddings such as semantic triples. \hyperlink{8}{[8]}\hyperlink{9}{[9]} This can then, in turn, be visualised as a more succinct and relevant knowledge graph, now only showing selective information applicable to an industry. \\
 
@@ -17,16 +59,9 @@ Such a product has great value and interest for not only the average civilian wh
 
 % While there are numerous studies and research on these different aspects of the project, they usually approach a standalone use case e.g., getting sentiment from data. There is a need for integrating the different aspects of information mining and delivering cohesive visual platform for this information, allowing the user to see the changes in these industries over time. 
 
-\section{Motivation}
+\section{Ethical Considerations} 
+This project focuses on semantic analysis of news articles with aim of knowledge distillation which from an intelligence standpoint, is extremely useful as it condenses large amounts of news to give a visual overview of an industry in a specific category over a period of time. Though this project might highlight recent developments and trends in a sector, it is extremely unlikely to influence and propagate some radicalised opinion. Additionally, given that there is no direct human involvement in this project, there is no collection or direct use of personal data.
 
-\section{Objectives} \label{objectives}
+One important ethical consideration, however, is to think about any bias introduced in the semantic analysis engine due to the nature of the input data which inherently might contain some underlying bias. For example, using the engine with a different input dataset focusing on the energy industry, which consists of majority right-wing articles talking about ``climate change being a hoax' and refusing to support clean energy alternatives, then that will be reflected in the output results (topics, associated sentiments and semantic triples) via the visualisation tool, illustrating a negative sentiment associated with clean energy. This is the nature of news publication, which is more often than not biased and polarising. This makes it very difficult to gauge what quantifies as unbiased, in fact, performing any filtration of articles to ``alleviate bias" would inherently introduce bias.
 
-
-\section{Contributions}
-
-
-
-\todonum[inline, color=lightgray, textcolor=black]{ Background: LDA}
-\todonum[inline, color=lightgray, textcolor=black]{https://link.springer.com/content/pdf/10.1186/s13673-019-0192-7.pdf : FOR TF-IDF and BoW}
-
-\todonum[inline, color=lightgray, textcolor=black]{ Background: Remove visualisation}
+Another key ethical consideration is that of using software and data that may have copyright licensing implications. A key aspect of this project is to use news articles for entity, sentiment and topic extraction. The news articles dataset is provided by DeepSearchLabs and are scraped from online sources, in particular, Bloomberg News. Using the articles (which are an Intellectual Property (IP) of these companies) for ``non-commercial" data analysis is not a copyright infringement as the copyright law has been updated to provide an exception for ``Text and data mining technologies to help researchers process large amounts of data"~\cite{exceptions_to_copyright}. All other libraries and software packages used such as D3, spaCy, Gensim and AllenNLP (See~\Cref{libraries}) are open-source and free to use for the purposes of this project (i.e., for academic use).

@@ -1,9 +1,9 @@
-\chapter{Project Structure}
-\vspace{-2ex}
+\chapter{Technical Architecture}
+\vspace*{-2ex}
 
 \section{Preparing Data: DataLoader} \label{dataloader}
 
-For the scope of this project, the data acquired was in the form of text-only English news articles, pertaining to the airline industry. This data was provided by DeepSearch Labs as a collection of news articles scraped from Bloomberg news, containing information such as the url of news article, the date it was published, the headline (title), the author, a pre-processed category and the article itself. The data (originally) a csv file, was loaded as a pandas dataframe for easy management and manipulation. An example of the format of the data is shown in~\Cref{dataframe}
+For the scope of this project, the data acquired was in the form of text-only English news articles, pertaining to the airline industry. This data was provided by DeepSearch Labs as a collection of news articles scraped from Bloomberg News, containing information such as the url of news article, the date it was published, the headline (title), the author, a pre-processed category and the article itself. The data (originally) a csv file, was loaded as a pandas dataframe for easy management and manipulation. An example of the format of the data is shown in~\Cref{dataframe}
 
 \begin{figure}[H] 
 \centering
@@ -21,7 +21,7 @@ Once these '(Year, Category)' groups were obtained, they were filtered based on 
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.7\linewidth]{images/system_arch.png}
+\includegraphics[width=0.8\linewidth]{images/system_arch.png}
 \caption{System Architecture Diagram}
 \label{fig:sys_arch}
 \end{figure}
@@ -38,17 +38,19 @@ At a high level, the tool's main goal is to perform semantic analysis on the new
     
     \item \textbf{Visualisation App:} Finally, the semantic clustering and latent topic models are visualised in circle packing graph and the semantic triples are visualised using a force directed graph using D3.js. 
     
+
 \end{enumerate}
 \section{Technologies used}
+\vspace{-1ex}
 \subsection{Libraries} \label{libraries}
 
-\textbf{SpaCy} is an open-source NLP library "designed specifically for production use"~\cite{spacy}. It uses state-of-the-art pre-trained models and in-built pipelines for data processing techniques such as tokenisation, dependency parsing and POS tagging etc. The motivation for using this over other alternatives such as NLTK, was that it was much faster than NLTK for word tokenisation and POS-tagging. Additionally, the NLTK API is quite primitive in comparison to the object-oriented spaCy and requires a lot of unnecessary string manipulation~\cite{spacy-nltk}. The spaCy pipeline is trained on several models. For this project, the pre-trained English \hl{en-core-web-lg model} was used with a large word vector table with approximately 500,000 entries.  
+\textbf{SpaCy} is an open-source NLP library ``designed specifically for production use"~\cite{spacy}. It uses state-of-the-art pre-trained models and in-built pipelines for data processing techniques such as tokenisation, dependency parsing and POS tagging etc. The motivation for using this over other alternatives such as NLTK, was that it was much faster than NLTK for word tokenisation and POS-tagging. Additionally, the NLTK API is quite primitive in comparison to the object-oriented spaCy and requires a lot of unnecessary string manipulation~\cite{spacy-nltk}. The spaCy pipeline is trained on several models. For this project, the pre-trained English \hl{en-core-web-lg model} was used with a large word vector table with approximately 500,000 entries.  
 
 \textbf{Gensim} is an NLP open-source library that makes use of state-of-the-art models for word vectorisation, text similarity and topic modelling. For this project, this library was used for the pre-trained models it exposes, in particular, \texttt{Word2Vec} and \texttt{GloVe} and for topic modelling for which the Latent Dirichlet allocation (LDA). 
 
 \textbf{AllenNLP} is an open-source NLP library built on PyTorch and offers variety of well-engineered existing state-of-the-art model implementations~\cite{allennlp}. Additionally, it is well integrated with components from the spaCy library such as the \texttt{Tokeniser} and \texttt{SentenceSplitter}, making it a fitting choice for this project. 
 
-\textbf{D3.js} is a JavaScript library which is commonly used for building data visualisations in the web browser. This was used in conjunction with React to build the web application for the visualisation tool. The motivation for using this library over several other alternatives was its data-driven approach to DOM manipulation which enables building customisable interactive visualisation frameworks. 
+\textbf{D3.js} is a JavaScript library used for building data visualisations in the web browser. This was used in conjunction with React to build the web application for the visualisation tool. The motivation for using this library over other alternatives was it's data-driven approach to DOM manipulation which enables building customisable interactive visualisation frameworks. 
 
 % \textbf{Ray} is an easy-to-use, fast distributed execution framework. It is designed to scale programs using state of the art ML libraries. This was used over the Python multiprocessing library as this provides a clean way to store memory intensive models in shared memory and run the functions tagged remote asynchronously giving a major performance gain.
 
@@ -62,5 +64,6 @@ Given the extensive prior research in literary analysis and natural language pro
 
 \textbf{Fine-Grained NER} is a state of the art named entity recognition model from AllenNLP and is a re-implementation of the Lample (2016)~\cite{lample} model. It makes use of bi-direction LTSM with a Conditional Random Field layer (CRF) and uses two types of embeddings: character embeddings and ELMo embeddings (refer to~\Crefrange{named_ents}{elmo}). In Lample (2016), a comparison study for the performance of the model for English NER on CoNLL-2003 test set highlights that it outperforms several other models giving an F1 score of 90.94\%~\cite{lample}. The motivation for using this model was this high accuracy and that the model identifies a broad range of 16 semantic types.
 
-\subsection{Web deployment}
-A web interface was used for displaying the results of the semantic analysis tool as it allowed for more succinct and cohesive visualisations and enabled user testing. This was accomplished by using React and D3.js to build stateful visualisations. In the latter stages of the project, the website was hosted on Heroku~\cite{heroku} which was a scalable approach to accommodate user testing and aided in the evaluation discussed in~\Cref{s:user_eval}.
+\section{Visualisation Web Tool}
+As an extension to the core body of work done in semantic clustering, latent topic model extraction (done by Topic Extraction Engine) and inferring semantic triples (done by Semantic Triple Extraction Engine), an interactive visualisation pipeline was created to display the results from the two engines in the semantic analysis tool. 
+This was done by developing a web interface using React and D3.js to build stateful cohesive visualisations, allowing the integration of all the different results in a web application. In the latter stages of the project, the application was hosted on Heroku~\cite{heroku} as was a scalable approach to accommodate user testing and aided in the evaluation discussed in~\Cref{s:user_eval}.
