@@ -2,15 +2,13 @@
 
 In this section, the main body of work is evaluated based on objectives defined at the beginning of the project (Section \ref{objectives}) and are detailed as follows:
 \begin{enumerate}
-    \item Investigate the effect of different pre-processing techniques on semantic and clustering and topic modelling.
-    \item Determine the best approach for generating word and document vectors.
-    \item Investigate the quality of semantic triples extracted based on decisions highlighted in Section \ref{key_decisions_rel}.
-    \item \hl{Evaluate the legibility of the results based on user feedback.}
+    \item Investigate the effect of different pre-processing techniques on semantic clustering and topic modelling.
+    \item Investigate the effect of different word embedding models on the quality of clustering.
+    \item Investigate the effect of different word embedding models and runtime environments on the performance (in terms of time efficiency).
+    \item Evaluate the legibility of the results from the Topic Extraction Engine and Semantic Triple Extraction Engine based on user feedback.
 \end{enumerate}
 
-\hl{Change this based on actual eval done}
-
-\section{Topic Extraction Engine} \label{s:evaluation_topic_extraction}
+\section{Quantitative evaluation of semantic clustering} \label{s:evaluation_semantic_clustering}
 
 \subsection{Effect of different processing techniques on clustering} \label{s:preprocess_clustering}
 
@@ -108,6 +106,8 @@ As discussed in Section \ref{word_embed_approaches}, in order to cluster the art
 
 Table \ref{table:word_embed} shows the (percentage) improvement in silhouette scores when using GloVe over TF\_TDF and Word2Vec. We see a 33.13\% improvement in clustering (by means of improved silhouette scores) when using GloVe instead of TF-IDF and and 31.90\% improvement when compared to word2Vec. Based on these results, it is evident that using GloVe is the optimal approach for word embedding or token vectorisation for semantic clustering. This is attributed to the fact that most of the silhouette scores are around 0.7 which shows evidence of distinct clusters of articles from which topics can be extracted. When clustering news articles, obtaining a perfect clustering with silhouette score of 1 is very difficult, especially when trying to cluster articles in a particular category within a particular industry. 
 % \todonum[inline]{FOR TOPIC MODELLING Do a comparison TABLE for the different sets of allowed postags, Remove adjective noun gives better performance, can show in sil score}
+
+\section{Evaluating topic modelling} \label{s:evaluation_semantic_clustering}
 
 \subsection{Effect of pre-processing on topic modelling} \label{s:preprocess_topic}
 

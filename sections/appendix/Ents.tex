@@ -3,43 +3,51 @@
 \vspace{-3em}
 \begin{table}[H]
     \centering
-    \renewcommand{\arraystretch}{1.2}
-    \begin{tabularx}{0.8\textwidth}{|>{\hsize=.3\hsize\linewidth=\hsize}X|>{\hsize=0.7\hsize\linewidth=\hsize}X|} 
+    \renewcommand{\arraystretch}{1.1}
+    \begin{tabularx}{\textwidth}{|>{\hsize=.18\hsize\linewidth=\hsize}X|>{\hsize=.5\hsize\linewidth=\hsize}X|>{\hsize=.32\hsize\linewidth=\hsize}X|} 
      \hline
-      \textbf{Dependency Tag} & \textbf{Meaning} \\
+      \textbf{Entity Type} & \textbf{Meaning} & \textbf{Examples}\\
      \hline
-        CARDINAL &  \\
+        CARDINAL & Numerals  & `200,00', `two'\\
         \hline
-        DATE &  \\
+        DATE &  Absolute, relative dates, including festivals & `3$^{rd}$ September', `two days', `Christmas'\\
         \hline
-        FAC &  \\
+        EVENT &  Named hurricanes, battles, sporting events & `Football World Cup', `Hurricane Katrina'
+        \\
         \hline
-        GPE &  \\
+        FAC &  Airports, building, bridges, highways, etc. & `London Bridge', `Heathrow'\\
         \hline
-        LAW &  \\
+        GPE &  Geo-Political Entities such as countries, cities, states & `London', `Alaska', `UK'\\
         \hline
-        LOC &  \\
+        LANGUAGE & Any named language & `English', `French' \\
         \hline
-        MISC &  \\
+        LAW & Named documents made into laws & `The First Amendment', `Newton Laws of Motion'\\
         \hline
-        MONEY & \\
+        LOC & Non-GPE locations, mountain ranges, bodies of water etc. & `Thames', `Himalayas' \\
         \hline
-        NORP &  \\
+        MONEY & Monetary values & `over three dollars', `\$300'\\
         \hline
-        ORG &  \\
+        MISC & Miscellaneous, unclassified entities & \\
         \hline
-        PERCENT &  \\
+        NORP & Nationalities or Religious or Political groups & `Indians', `Christians'\\
         \hline
-        PERSON &  \\
+        ORDINAL & Number indicating position & `first', `second' \\
         \hline
-        QUANTITY &  \\
+        ORG &  Organisations, including companies, institutions etc. & Microsoft, PayPal \\
         \hline
-        TIME &  \\
+        PERCENT & Percentage & `three percent', `40\%'\\
+        \hline
+        PERSON & Name of person, including fictional & `Harry Potter', `Obama' \\
+        \hline
+        PRODUCT & Objects, vehicles, company products etc. & `Alexa', `Siri'\\
+        \hline
+        QUANTITY &  Measurements, including weights or distance & `200m', `three kilograms' \\
+        \hline
+        TIME & Time periods smaller than a day & `this minute', `2 hours'\\
+        \hline
+        WORK\_OF\_ART &  Include books, songs, paintings etc. & `Mona Lisa', `The Legend of Zelda'\\
     \hline
     \end{tabularx}
     \caption{Named Entity Types extracted by Fine-Grained NER~\cite{lample}}
     \label{appendix:semantic_types}
     \end{table}
-
-    
-    \todonum[inline]{Find all semantic types}
