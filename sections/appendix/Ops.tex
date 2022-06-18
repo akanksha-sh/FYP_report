@@ -1,0 +1,36 @@
+
+\chapter{Common Regular Expressions}
+
+\begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.2}
+    \begin{tabularx}{0.85\textwidth}{|>{\hsize=.2\hsize\linewidth=\hsize}X|>{\hsize=0.8\hsize\linewidth=\hsize}X|} 
+     \hline
+      \textbf{Operator} & \textbf{Meaning} \\
+     \hline
+        . & Match any character (except line break) \\
+        \hline
+        ? &  Match zero or one times \\
+        \hline
+        * & Match zero or more times \\
+        \hline
+        + & Match one or more times \\
+        \hline
+        A$|$B & OR operand, match A or B \\
+        \hline
+        $\widehat{\ }$  & Anchor, matches from start of string \\
+        \hline
+        \$ & Anchor, matches from end of string \\
+        \hline
+        $\{\text{n}\}$ & Quantifier, match exactly `n' times \\
+        \hline
+        $\{\text{n, m}\}$ & Quantifier, match between `n' to `m' times \\
+        \hline
+        [AB] & Character group, match characters which are A and/or B \\
+        \hline
+        [$\widehat{\ }$AB] & Negated character group, match between characters not A or B\\
+    \hline
+    \end{tabularx}
+    \caption{Common regular expression (i.e., Regex) syntax}
+    \label{appendix:ops}
+    \end{table}

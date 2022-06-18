@@ -9,6 +9,8 @@ main.log
 *.aux
 *.out
 *.toc
+*.lot
+*.lof
 .DS_Store
 *.pygtex
 *.pygstyle

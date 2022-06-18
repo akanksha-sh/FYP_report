@@ -15,7 +15,7 @@ The first step involves coreference resolution of the articles (`intros'). This 
 Post-coreference resolution of the article intros, the data needs to be `cleaned' in order to ensure that the news articles retrieved are informative and useful. This involves the following steps: 
 \begin{enumerate}
     \item Removing any unnecessary characters e.g., trailing ellipsis, parenthesis etc.
-    \item Removing stopwords. The spaCy model's default stopwords list was used. This significantly reduced the amount of text per article intro by removing words such as this, `that', `there', `where', `are' etc. This alone, however, was not sufficient. Given the nature of online news articles, there were some prominent phrases that showed up in several articles, e.g., \qd{Read here}, \qd{For more information}, \qd{Sourced by} etc. These were also removed as they do not provide any relevant information specific to the article, thereby reducing redundancy.
+    \item Removing stopwords using spaCy's default stopword list for the pre-trained English model, containing words such as `its', `moreover', `that', `are' etc. This stoplist is augmented with a custom list of words such as \qs{told}, \qs{said}, \qs{airline}, \qs{flight} etc. which, given the nature of our dataset, online articles for airline industry, occur in the majority of the articles. These words do not contribute towards any relevant information specific to the article and are therefore removed in attempt to reduce redundancy. Similarly, common phrases in online articles such as \qd{Read here}, \qd{For more information} etc. are also removed. This significantly reduced the amount of text per article.
 
 \end{enumerate}
 
@@ -24,7 +24,7 @@ As mentioned previously, the aim of these pre-processing steps was to obtain a \
 
 This step was done before tokenisation as named entities are often multi-word entities such as ``British Airways", ``Paul Sweeney", ``New Haven" etc. and removing these post-tokenisation would not be ideal as they would lose their semantic meaning as tokens. For instance, post tokenisation, the model would try to remove all instances of `New' and `Haven' from the `article intro'. Therefore, regex patterns were used to remove all the occurrences of the extracted entities in an article. This included removing all entity types (See Appendix~\Cref{appendix:semantic_types}) which included, but were not limited to, `PER', `LOC', `GPE', `MONEY', `DATE', `ORG' etc. This also had a performance gain over the post-tokenisation approach as it avoided the lookup for each token against the unwanted entity tokens list.
 
-The process of extracting the named entities from the article corpus involved using the Fine Grained NER model (See~\Cref{s:models}) and the BILOU encoding scheme for NER (See~\Cref{bk:ner}) and is detailed in~\Cref{alg:named_ents}. The output from the NER model gives a set of words and their corresponding entity tags. In essence, the algorithm shows the process of obtaining single word entities (with `Unit' tag) and multi-word entities (by joining entity tokens to build the entity phrases starting from the `Beginning' token until the `Last' token) and ignoring words with the `Outside' tag as they do not refer to an entity.
+The process of extracting the named entities from the article corpus involved using the Fine Grained NER model (See~\Cref{s:models}) and the BILOU encoding scheme for NER (See~\Cref{named_ents}) and is detailed in~\Cref{alg:named_ents}. The output from the NER model gives a set of words and their corresponding entity tags. In essence, the algorithm shows the process of obtaining single word entities (with `Unit' tag) and multi-word entities (by joining entity tokens to build the entity phrases starting from the `Beginning' token until the `Last' token) and ignoring words with the `Outside' tag as they do not refer to an entity.
 
 \begin{algorithm}[H]
   \caption{Extract Named Entities}
@@ -181,7 +181,7 @@ Once the normalised data is mapped to the lower subspace, the articles are clust
 Furthermore, to avoid falling into the trap of random centroids initialization, a major shortcoming of the KMeans method, the clustering was done with KMeans++. KMeans++ offers a better initialisation approach for centroids, in which the first one is picked at random and the subsequent centroids are chosen with a probability proportional to the squared distance from the closest chosen centroid.
 
 
-\subsection{Determining the optimal number of clusters}
+\subsection{Determining the optimal number of clusters} \label{s:optimal_clusters}
 Determining the number of clusters (k) in KMeans is a crucial factor to consider. This was done by computing the KMeans clustering algorithm for different values of k varying from 2 (minimum number of clusters) to m (maximum number of clusters), and picking the optimal k based on a comparing statistic. The two comparison statistics considered were: Elbow method with Within Cluster Sum of Square distance (WCSS) and Silhouette score. 
 
 \subsubsection{Method 1: Minimising WCSS using Elbow Method}
@@ -393,7 +393,7 @@ Therefore, based on the information presented by \Crefrange{fig:topics_travel202
 Therefore, based on results seen in \Crefrange{fig:topics_travel2021}{fig:topics2_travel2021}, we also get confidence in the Topic Extraction Engine's semantic clustering, as we can see the distinction in the different clusters extracted: C0 which focuses on airlines, jet orders and C1, which focuses on resuming tourism.
 Furthermore, the qualitative differences between the topics within clusters are is also apparent, which successfully provide insight into the relevant articles contributing to these topics, as well as the associated sentiment regarding that topic.
 
-\subsection*{Limitations}
+\subsection{Limitations} \label{limitation_topics}
 
 One of the limitations of the Topic Extraction Engine is the inherent limitation of topic models. There a certain ambiguity associated with the term `topic', while they provide a general grouping of themes in the text, they can not be interpreted as highly nuanced article classification. For topics with several associated articles, it can be sometimes be difficult to interpret the topic, particularly the `topic name'. This is because if the keywords present in the topic have low semantic similarity in terms of their \texttt{GloVe vector embeddings}, the current Topic Name Inference approach is not able to extract a 'meaningful' topic name.
 
