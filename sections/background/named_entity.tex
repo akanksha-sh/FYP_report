@@ -60,7 +60,7 @@ The NER models are usually trained on specific domains and thereby only extract 
 % \item \textbf{Feature-inferring neural-network approaches:} Like learning-based approaches they incorporate machine learning techniques, however, they automatically infer the features by using deep neural networks (DNNs) such as LSTM. Reportedly, \hyperlink{9}{[9]}, they generally outperform the other approaches. They are able to perform feature extraction in the lower layers of the network and use these to train the classifier. The advantage is that they do not require seeds, ontologies or any domain-specific lexicons and are therefore domain-independent making them more robust. However, they do require huge datasets to build a decent model.  \hyperlink{9}{[9]}
 % \end{enumerate}
 
-\subsection{Named Entity Disambiguation and Linking}
+\subsection{Named Entity Disambiguation and Linking} \label{ned}
 
 \textbf{Named Entity Disambiguation (NED)}: NER might not always be able to classify a named identity due to it having a different meaning in different contexts. This is why named entity disambiguation is crucial to determine which
 named entity a mention refers to; For instance, `Trump' can refer to either a person, a corporation or a building~\cite{ieee_named_entity}.

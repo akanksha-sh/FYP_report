@@ -19,17 +19,20 @@ In order to cluster the news articles, different pre-processing techniques were 
   \begin{minipage}[t]{.49\linewidth}
     \centering
     \includegraphics[width=\linewidth]{images/eval/effect_preprocessing.png}
-    \caption{-}
+    \caption{Silhouette scores of clusterings obtained by omitting different pre-processing techniques for input group `Travel 2021'}
+    
     \label{fig:pre-processing_sil}
   \end{minipage}
+  \hfill
   \begin{minipage}[t]{.49\textwidth}
     \centering
     \includegraphics[width=\linewidth]{images/eval/preprocessing_cluster_no.png}
-    \caption{-}
+    \caption{Optimal numbers of clusters obtained by omitting different pre-processing techniques for input group `Travel 2021'}
      \label{fig:pre-processing_cluster_no}
   \end{minipage}
 \end{figure}
 
+\vspace*{-1.5em}
 Another interesting observation as seen in~\Cref{fig:pre-processing_cluster_no} is how pre-processing affects the optimal number of clusters determined by the Topic Extraction Engine by running the KMeans clustering algorithm with a range of different `k' (See~\Cref{s:optimal_clusters}) and the optimal `k' (number of clusters) as the one that gives the highest silhouette score. Generally, the aim is to get the best silhouette score with the smallest number of clusters. This is because we do not want the Topic Extraction Engine to over-cluster the data by fixating on small differences within the corpus. The semantic clusters are derived for topics to be modelled within them, therefore, we want the engine to achieve a high-level semantic grouping of articles in the form of few, substantially large, distinct clusters. In the example shown in~\Crefrange{fig:pre-processing_sil}{fig:pre-processing_cluster_no}, Travel 2021 was selected as it has a very few number of member articles: 17. Not performing any pre-processing results in 6 clusters for a group of 17 articles. This is excessive as it means each semantic cluster has about 2 or 3 articles. Therefore, the latent topics extracted from these will be modelled on an extremely small corpus of about 2 articles and will most likely be incoherent. For the same data group, performing all the techniques mentioned (i.e., coreference resolution, lemmatisation, named entity and stopword removal), results in a much lower number of clusters: 3. In conclusion, the trend established by \Crefrange{fig:pre-processing_sil}{fig:pre-processing_cluster_no} \hl{is that by performing the pre-processing techniques mentioned , the engine is able to cluster the articles in a Year-Category group in fewer as well as more distinct clusters indicated by the lower optimal number of clusters and higher silhouette scores.}
 
 % \todonum[inline]{Add LDA}
@@ -43,36 +46,37 @@ Another key decision made in the Topic Extraction Engine in an attempt to improv
   \begin{minipage}[t]{.49\linewidth}
     \centering
     \includegraphics[width=\linewidth]{images/eval/business2020_sil.png}
-    \caption{-}
+    \caption{Optimal silhouette score and number of clusters for `Business 2020' }
     \label{fig:pos_business2020}
   \end{minipage}
   \begin{minipage}[t]{.49\textwidth}
     \centering
     \includegraphics[width=\linewidth]{images/eval/business2021_sil.png}
-    \caption{-}
+    \caption{Optimal silhouette score and number of clusters for `Business 2021'}
     \label{fig:pos_business2021}
   \end{minipage}
   \begin{minipage}[t]{.49\textwidth}
     \centering
     \includegraphics[width=\linewidth]{images/eval/politics2021_sil.png}
-    \caption{-}
+    \caption{Optimal silhouette score and number of clusters for `Politics 2021'}
     \label{fig:pos_politics2021}
   \end{minipage}
   \begin{minipage}[t]{.49\textwidth}
     \centering
     \includegraphics[width=\linewidth]{images/eval/pursuits2021_sil.png}
-    \caption{-}
+    \caption{Optimal silhouette score and number of clusters for `Prognosis 2021'}
     \label{fig:pos_pursuit2021}
   \end{minipage}
 \end{figure}
 
+\vspace*{-1em}
 More evidently, it is important to note that the optimal number of clusters is much lower with a noun-only corpus as seen in the figures above. \Cref{fig:pos_business2020} shows that the silhouette score of 0.42 is achieved with only 6 clusters for noun-only tokens list compared to 12 clusters with nouns, adjectives, verbs and adverbs. For example, \textit{['coronavirus', 'aviation', 'industry', 'border', 'restriction', 'travel, 'quarantine']} is a more concise and general representation of an article as opposed to \textit{['job', 'wipe', 'bad', 'come', 'worker', 'tell', 'worker', 'coronavirus', 'spend', 'lengthy','drastically', 'quarantine']}. Adjectives, adverbs and verbs are not meaningful on their own. Additionally, their generic nature means they are not unique to articles and including them in the \texttt{filtered\_tokens} allows them to equally contribute to their corresponding article vectors as distinctive nouns (e.g., `pandemic') in the corpus, thereby making the article vector less precise. Furthermore, the more tokens used for generating the document vectors, the greater the potential to introduce noise, resulting in high variance among vectors, making the corpus difficult to cluster, and thereby resulting in suboptimal clustering (with more clusters than necessary).
 
 \subsection{Effect of different word embedding techniques on clustering} \label{s:word_embeddings}
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.7\linewidth]{images/eval/word_embedding.png}
+\includegraphics[width=0.8\linewidth]{images/eval/word_embedding.png}
 \caption{Effect of using TF-IDF, Word2Vec and GloVe as word embedding model on clustering silhouette scores}
 \label{fig:word_embed}
 \end{figure}
@@ -114,22 +118,22 @@ Table \ref{table:word_embed} shows the (percentage) improvement in silhouette sc
     \begin{minipage}[t]{.49\linewidth}
       \centering
       \includegraphics[width=\linewidth]{images/eval/coherence_preprocess.png}
-      \caption{-}
+      \caption{Average coherence score of all topic models for each semantic cluster in `Pursuits 2021' }
       \label{fig:preprocess_topic}
     \end{minipage}
     \begin{minipage}[t]{.49\textwidth}
       \centering
       \includegraphics[width=\linewidth]{images/eval/preprocessingTopicNo.png}
-      \caption{-}
+      \caption{Average number of topics for each semantic cluster in `Pursuits 2021' }
        \label{fig:pre-processing_topic_no}
     \end{minipage}
   \end{figure}
-
+\vspace*{-1em}
  Similar to~\Cref{s:preprocess_clustering}, this section also focuses on the effect of pre-processing techniques but on the topics extracted from semantic clusters in Year-Category groups. The topics extracted from each cluster result in a topic coherence score and these are averaged over all clusters in a Year-Category input group to give an average coherence score (for the input group). The coherence score is a useful metric for evaluating the quality of topics extracted as it assesses the degree of semantic similarity between high-scoring terms in a single topic. In similar trends as seen for semantic clustering,~\Crefrange{fig:preprocess_topic}{fig:pre-processing_topic_no} show that applied all the pre-processing techniques (represented by the 'All' bar) results in a significantly higher average coherence score with less number of topics compared to other approaches.  
 
 In the case of omitting coreference resolution, the (average) coherence score falls (to 0.560) as word tokens such as 'it', 'they', 'those' (essentially, unresolved pronouns) do not contribute to the semantic similarity with other high scoring terms in the corpus. Therefore, resolving these pronouns to their respective nouns, means that the frequency of the nouns increases, and they are more likely to contribute to the topics in the corpus. Omitting lemmatisation similarly results in a drop in coherence (and increase in number of topics) as the tokens are not resolved to their base forms affecting the frequency of common words (e.g. tourist and tourists will be treated as different keywords).
 
-As mentioned in~\Cref{data_cleaning}, stopword list contains the default spaCy stopwords (around 326 words), augmented with a custom list of frequently occurring unnecessary words and phrases specific to the input data such as `told', `said' (as news article commonly quote entities, especially people) and `airline', `flight etc. (since news article are specific to the airline industry). The latter are removed as they can be thought of as overarching themes spanning many topics but do not contribute to a distinct topic. The idea is that we do not want the model to fixate on these commonly appearing contextless stopwords and output junk topics, hence why removing them results in better topic coherence (0.775 denoted by the \qs{All} bar) as seen in \ref{fig:preprocess_topic} compared to when they are retained which results in a lower topic coherence of 0.639.
+As mentioned in~\Cref{data_cleaning}, stopword list contains the default spaCy stopwords (around 326 words), augmented with a custom list of frequently occurring unnecessary words and phrases specific to the input data such as `told', `said' (as news article commonly quote entities, especially people) and `airline', `flight etc. (since news article are specific to the airline industry). The latter are removed as they can be thought of as overarching themes spanning many topics but do not contribute to a distinct topic. The idea is that we do not want the model to fixate on these commonly appearing contextless stopwords and output junk topics, therefore removing them results in better topic coherence (0.775 for \qs{All}) as seen in \ref{fig:preprocess_topic} compared to when they are retained which results in a lower topic coherence of 0.639.
 
 As established prior, named entity removal is done to allow the engine to find distinct topics within a cluster that are not dependent on the named entities. For instance, let's assume that there is a huge overlap between \qs{pilot unions} and \qs{British Airways}. Retaining named entities in the input corpus could result in the model selecting `British Airways' as a topic instead of 'pilot unions'. \Cref{fig:pre-processing_topic_no}, indicates that retaining named entities significantly increases number of topics (6). Some of these topics are `junk', have low coherences scores implied by the lower average coherence score of 0.582 in~\Cref{fig:preprocess_topic}. This makes sense as named entities can be associated with several topics resulting in overlapping clusters, which may be split resulting in more (incoherent) topics. Finally, as expected, omitting all pre-processing results in the lowest average coherence score of 0.401 and highest number of topics (6). 
 
@@ -140,13 +144,13 @@ As established prior, named entity removal is done to allow the engine to find d
     \begin{minipage}[t]{.49\linewidth}
       \centering
       \includegraphics[width=\linewidth]{images/eval/pos_coherence.png}
-      \caption{pos}
+      \caption{Average coherence score for all input data groups for different allowed POS tags}
       \label{fig:pos_topic}
     \end{minipage}
     \begin{minipage}[t]{.49\linewidth}
       \centering
       \includegraphics[width=\linewidth]{images/eval/topics_pos.png}
-      \caption{-}
+      \caption{Average number of topics for all input data groups for different allowed POS tags}
        \label{fig:topics_pos}
     \end{minipage}
   \end{figure}
@@ -183,7 +187,7 @@ Data group & CPU &  Multiprocessing (CPU) & Tesla T4 GPU \\
 \caption{Time taken to run the Semantic Analysis Engine pipeline for all data groups(in seconds)}
 \label{table:cputime}
 \end{table}
-\vspace{-2em}
+\vspace{-1em}
 \Cref{table:cputime} shows the different runtimes for the pipeline when running on a CPU, with multiprocessing (on CPU) and GPU (Tesla T4). Ideally, the pipeline is meant to be run on the GPU as it results in significant improvement in computation time, with the whole process of running the pipeline for all the input groups from the dataloader taking only 6.9 minutes in comparison. This is 11.8 times faster than running it on the CPU and 4.6 times faster than running it on the CPU with multiprocessing. The reason for the high computation time for CPU is due to the expensive calls to the AllenNLP models, particularly the Fine-Grained NER, SpanBERT Coreference and RoBERTa Sentiment models (See~\Cref{s:models}), which unlike spaCy, are not built for production use and therefore not optimised for time. However, given that they are state-of-the-art models that achieve high performance for their respective NLP tasks, their use is extremely beneficial to the project. This motivated the use of multiprocessing and designing the engine architecture as a pipeline which takes an input Year-Category data group and outputs the results for the visualisation tool (See \Cref{fig:sys_arch}), to allow for feasible CPU computation. 
 
 Processes are traditionally constrained to just having access to their own process memory, however shared memory permits data structures to be shared between processes. The AllenNLP models in question are significantly large and RAM-intensive and therefore, having multiple copies of the models (one for each process) can result in the machine running out memory. Therefore, it is crucial to store these models in shared memory in order to provide centralised access to all running processes and avoid redundant copies of models for each process. This allowed running the tool on the 8 different data groups simultaneously, resulting in a performance gain in terms of time efficiency as seen in~\Cref{table:cputime}, which shows that using multiprocessing results in 2.55 times lower computational time compared to running with single process CPU. This is because the idle time is significantly reduced by concurrent processes during the expensive calls for coreference resolution, sentiment analysis and NER. 
@@ -223,7 +227,7 @@ In an attempt to gain a greater understanding of the performance of our tool, us
 \begin{figure}[H]
 \centering     %%% not \center
 \includegraphics[width=0.95\linewidth]{images/eval/user_eval.png}
-\caption{E-}
+\caption{Response summary for survey of 4 statements based on a 5-point agreement scheme, where 0 is strongly disagree and 5 is strongly agree}
 \label{user_eval}
 \end{figure}
 

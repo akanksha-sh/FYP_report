@@ -52,7 +52,7 @@ The process of extracting the named entities from the article corpus involved us
 \end{algorithm}
 
 \subsection{Filtering Tokenised Data} \label{filtered_tokens}
-Once the data is cleaned and void of the pre-determined entity types, the article intros are tokenised and normalised. This was done using the spaCy library's \texttt{Tokeniser} and \texttt{Lemmatiser} respectively, which are pre-trained on the English language model: \hl{en\_core\_web\_lg} (See~\Cref{libraries}). Normalisation was done through lemmatisation (to obtain the base forms of the tokens). This was chosen instead of stemming as it guaranteed more semantically meaningful tokens for reasons detailed in~\Cref{normalisation}. The process of obtaining a list of tokens for each article intro was as follows:
+Once the data is cleaned and void of the pre-determined entity types, the article intros are tokenised and normalised. This was done using the spaCy library's \texttt{Tokeniser} and \texttt{Lemmatiser} respectively, which are pre-trained on the English language model: \texttt{en\_core\_web\_lg} (See~\Cref{libraries}). Normalisation was done through lemmatisation (to obtain the base forms of the tokens). This was chosen instead of stemming as it guaranteed more semantically meaningful tokens for reasons detailed in~\Cref{normalisation}. The process of obtaining a list of tokens for each article intro was as follows:
 \begin{enumerate}
     \item Each sentence in the intro was turned into a list of tokens.
     \item These tokens were filtered by their Part-Of-Speech (POS) tags against the allowed POS tags, which was restricted to nouns (`NOUN').
@@ -97,11 +97,11 @@ Approach 2 & Instead of simply averaging of token vectors, the document vector f
 
 Approach 3 & Building on the previous approach, this method selects the top 10 most representative words based on the TF-IDF weightings and performs the weighted average to generate the article `intro' vector.\\
 \end{longtable}
-\vspace{-2ex}
+\vspace{-1ex}
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.9\linewidth]{images/eval/doc_embedding_sil.png}
-  \caption{Effect of document vector generation approaches on clustering silhouette scores where Approach 1 = Average, Approach 2 = TF-IDF Weighted, and Approach 3 = Top 10 most representative }
+  \caption{Effect of document vector generation approaches on clustering silhouette scores where Approach 1 = Average, Approach 2 = TF-IDF Weighted, and Approach 3 = Top 10 most Representative }
   \label{fig:doc_embeddings}
   \end{figure}
 
@@ -131,20 +131,19 @@ The concept of clustering these articles relies on grouping similar articles tog
     \begin{minipage}[t]{.49\textwidth}
       \centering
       \includegraphics[width=\textwidth]{images/eval/explained_variances.png}
-      \caption{-}
+      \caption{Proportion of explained variance across principal components for transformed data to dimensions=1..10}
       \label{fig:explained_variance}
     \end{minipage}
     \begin{minipage}[t]{.49\textwidth}
       \centering
       \includegraphics[width=\textwidth]{images/eval/pca_silhouette.png}
-      \caption{-}
+      \caption{Optimal silhouette scores for data with dimensions=1..10 transformed using PCA }
       \label{fig:pca_sil}
     \end{minipage}
   \end{figure}
 
 
-
-  As seen in~\Cref{fig:explained_variance}, when the article vector space is projected to dimension=1, the variance is explained entirely by dimension 1 (indicated by the blue dot). As the number of dimensions increase, i.e. the number of principal components increase, the main proportion of the variance (close to 1) can still be explained by the first principal component. Projecting to 10 dimensions, the explained variances for each of the 10 principal components is as follows: 
+  As seen in~\Cref{fig:explained_variance}, when the article vector space is projected to dimension=1, the variance is explained entirely by the 1$^{st}$ principal component (indicated by the blue dot). As the number of dimensions increase, i.e. the number of principal components increase, the main proportion of the variance (close to 1) can still be explained by the first principal component. Projecting to 10 dimensions, the proportion of explained variances (as a percentage) for each of the 10 principal components is as follows: 
   \begin{table}[H]
       \centering
   \renewcommand{\arraystretch}{1.1}
@@ -152,12 +151,12 @@ The concept of clustering these articles relies on grouping similar articles tog
     \hline
     PC & \textbf{1} & \textbf{2}  & \textbf{3}  & \textbf{4}  & \textbf{5} & \textbf{6} & \textbf{7}  & \textbf{8}  & \textbf{9}  & \textbf{10}\\
     \hline
-    EV & 0.88 & 0.026 & 0.021 & 0.014 & 0.011 & 0.010 & 0.0094 & 0.0090 & 0.0082 & 0.0074\\ 
+    EV(\%) & 70.6\% & 5.4\% & 4.4\% & 3.5\% & 3.3\% & 3.0\% & 2.8\% & 2.4\% & 2.4\% & 2.1\% \\ 
     \hline
     \end{tabularx}
   \end{table}
-  
-  Therefore, even at 10 dimensions, 88\% of the variance can be explained by the first principal component (PC) alone and therefore, the article vector space can be transformed using PCA with dimensions=1. \Cref{fig:pca_sil} shows the effect of transforming the article vector space to different dimensions on the silhouette scores, which represent the `goodness of clustering'(See~\Cref{s:silhouette score}). It indicates that transforming the vectors to a single dimension (using PCA) result in the highest silhouette score. Therefore,~\Crefrange{fig:explained_variance}{fig:pca_sil} conclude that the setting the dimension to 1 for PCA transformation results in the most optimal clustering whilst minimising information loss.
+
+  Therefore, even at 10 dimensions, 70.6\% of the variance can be explained by the first principal component (PC) alone and therefore, the article vector space can be transformed using PCA with dimensions=1. \Cref{fig:pca_sil} shows the effect of transforming the article vector space to different dimensions on the silhouette scores, which represent the `goodness of clustering'(See~\Cref{s:silhouette score}). It indicates that transforming the vectors to a single dimension (using PCA) result in the highest silhouette score. Therefore,~\Crefrange{fig:explained_variance}{fig:pca_sil} conclude that the setting the dimension to 1 for PCA transformation results in the most optimal clustering whilst minimising information loss.
 
 \subsection{KMeans Clustering}
 Once the normalised data is mapped to the lower subspace, the articles are clustered based on their cosine similarity~\cref{eq:cosine_sim} using `cosine distance' as the distance function~\cref{eq:cosine_distance} and KMeans as the clustering technique. This was done using the \texttt{kmeans} function exposed by the \texttt{sklearn} library but `euclidean distance'~\cref{eq:euc_distance} (instead of `cosine distance') as distance metric. This is feasible given the linear relationship between euclidean distance and  cosine distance~\cite{kmeans} for normalised vectors shown in~\cref{eq:relationship_ce}.
@@ -202,7 +201,7 @@ As seen in~\Cref{fig:elbow}, the elbow (bend) in the plot determines the optimal
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.4]{images/elbow.png}
-\caption{`Business 2020' Elbow Method Plot for k=2..7}
+\caption{Elbow Method Plot for KMeans clustering with k=2..7 for input group: `Business 2020' }
 \label{fig:elbow}
 \end{figure}
 
@@ -221,7 +220,7 @@ The silhouette score for a clustering as shown in~\ref{eq:ss} is the mean of the
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.4\linewidth]{images/sil_kmeans_.png}
-\caption{`Business 2020' Silhouette Plot for KMeans clustering with k=2..7}
+\caption{Silhouette Plot for KMeans clustering with k=2..7 for input group: `Business 2020'}
 \label{fig:sil_kmeans}
 \end{figure}
 \vspace{-2ex}
@@ -358,7 +357,7 @@ For topic extraction, usually one of either cluster analysis or topic modelling 
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.93\linewidth]{images/travel2021_topics_cropped.png}
-  \caption{Cluster-Topic diagram for Travel 2021, with expanded view for Cluster 0 (C0), showing topic information for topic T0}
+  \caption{Cluster-Topic diagram for Cluster 0 (C0) in `Travel 2021', with expanded view displaying topic information for topic T0}
   \label{fig:topics_travel2021}
 \end{figure}
 
@@ -369,7 +368,7 @@ The aim of the Topic Extraction Engine is to derive semantic clusters from the a
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.99\linewidth]{images/travel2021_topics_1b.png}
-  \caption{Cluster-Topic diagram for Travel 2021, with expanded view for Cluster 0 (C0), showing topic information for topic T1}
+  \caption{Cluster-Topic diagram for Cluster 0 (C0) in `Travel 2021', with expanded view displaying topic information for topic T1}
   \label{fig:topics1b_travel2021}
 \end{figure}
 
@@ -382,7 +381,7 @@ Therefore, based on the information presented by \Crefrange{fig:topics_travel202
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.99\linewidth]{images/travel2021_topics_2.png}
-  \caption{Cluster-Topic diagram for Travel 2021, with expanded view for Cluster 1 (C1), showing topic information for the only topic T0}
+  \caption{Cluster-Topic diagram for Cluster 1 (C1) in `Travel 2021', with expanded view displaying topic information for the only topic T0}
   \label{fig:topics2_travel2021}
 \end{figure}
 

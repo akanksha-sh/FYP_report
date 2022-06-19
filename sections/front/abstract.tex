@@ -2,8 +2,29 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{abstract}
 
-  In today's media climate, there is an overwhelming amount of news, with several thousand articles published daily and made available though a variety of online sources. For an average consumer looking to gain a general insight into a particular field of news, this information overload can be extremely overwhelming and difficult to navigate. This poses a need for knowledge distillation and information retrieval through semantic analysis of news corpora. Previous works have focused on isolated aspects of semantic analysis, ranging from temporal analysis of named entity co-occurrence to news summarisation through sentence relevance identification. However, very few investigations in this field offer a combined solution for concise and coherent representation of news in a particular industry.
-% This information deluge may be incredibly daunting and difficult to manage for the typical consumer wanting to obtain a broad understanding of a certain subject of news
+  In today's media climate, there is an overwhelming amount of news. Several thousand articles published daily are made available through a variety of online sources. This information overload can be difficult to navigate for the typical consumer wanting to obtain a broad understanding of a certain subject of news. This poses a need for knowledge distillation and information retrieval through semantic analysis of news corpora. Previous works have focused on isolated aspects of semantic analysis, such as temporal analysis of named entity co-occurrence, modelling topic sentiment and news summarisation through sentence relevance identification. However, very few investigations in this field offer a combined solution for concise and coherent representation of news in a particular industry.
+
+%   For an average consumer looking to gain a broad insight into a particular field of news, this information overload can be difficult to navigate.
+  
+This paper proposes an end-to-end \hl{semantic analysis} pipeline that focuses on two aspects of semantic analysis: topic extraction and knowledge representation through semantic triples. \hl{By incorporating various natural language processing techniques}, we present a novel topic extraction approach that combines cluster analysis and topic modelling to produce high-level semantic clusterings of news articles, from which latent topics models, optimised for coherence, are derived. Furthermore, we introduce a \hl{lexico-semantic} approach to build a minimal representation of the information in these topics using semantic triples. 
+
+% we present a novel topic extraction approach that combines cluster analysis and topic modelling to produce high-level semantic clusterings of news articles, from which latent topics models optimised for coherence are derived. 
+
+Through the cohesive integration of these components, our solution delivers consolidated insight into relevant topics, entities, events and sentiments surrounding the developments within the airline industry over a set period of time.
+
+
+
+% This is achieved by two \hl{primary engines} which perform high-level semantic clustering of articles, model coherent latent topics on these clusters and adopt a \hl{lexico-semantic} approach to build a minimal representation of the information in these topics via semantic triples. 
+
+
+% This information is representative of the developments within an industry, providing valuable insight into the relevant topics, associated sentiments and news surrounding key entities and events in an article corpus. 
+
+% \hl{Our work draws on several natural language processing techniques discussed above to provide a semantic analysis engine, that aims to help alleviate information overload by distilling the knowledge extracted from the news corpora (into topics and corresponding semantic triples). For the scope of this project, the news is limited to the airline industry.}
+
+% \hl{For topic extraction, usually one of either cluster analysis or topic modelling is performed on the input data (news articles), however, by combining these methods we are able to provide a high-level semantic grouping through clustering as well as a finer-grained grouping through topic models}
+
+    
+\end{abstract}
 
 % This paper proposes an end-to-end semantic analysis pipeline that employs a combination of natural language processing techniques to derive a high-level semantic clustering of articles in order to model coherent latent topics symbolic of key themes in the article corpus and provide a minimal representation of the information in these topics via semantic triple extraction. Through this tool, we are able to consolidate news to provide essential insight into the developments within an industry in terms of relevant topics, key entities, events and sentiment surrounding them, for a specific category of news over a period of time. 
 
@@ -12,24 +33,3 @@
 % This paper proposes an end-to-end semantic analysis pipeline with two main information retrieval engines as a solution for a cohesive and digestible medium for presenting information in news. These engines perform high-level semantic clustering of articles, used for modelling coherent latent topics and adopt a lexico-semantic approach to build a minimal representation of the information in these topics via semantic triples. Through this tool, we are able to consolidate information mined from news to provide essential insight into the developments within an industry in terms of relevant topics, key entities, and events as well as the sentiment surrounding them, for a specific category of news over a period of time.
 
 % This paper proposes an end-to-end semantic analysis pipeline with two main engines as a solution presenting information retrieved from news. 
-
-
-This paper proposes an end-to-end semantic analysis pipeline as a solution for consolidating information mined from a category of news over a period of time. 
-This information is representative of the developments within an industry, providing valuable insight into the relevant topics, associated sentiment key entities, and in an article corpus. This is achieved by two \hl{primary engines} which perform high-level semantic clustering of articles, model coherent latent topics on these clusters and adopt a \hl{lexico-semantic} approach to build a minimal representation of the information in these topics via semantic triples. 
-
-
-
-    % <Issue Statement> several thousand articles, difficult to navigate
-
-    % <Problem statement> need for a concise medium of news
-    
-    % <Previous study limitations>
-
-    % <Our work focuses on ...>
-
-    % <Provides a graphical representation>
-
-    % <Different processes to tune our engine> 
-    
-\end{abstract}
-
