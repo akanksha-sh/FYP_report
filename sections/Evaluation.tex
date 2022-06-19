@@ -218,7 +218,7 @@ Processes are traditionally constrained to just having access to their own proce
 \Cref{table:word_embed} highlights the effect of different word embedding models on the time taken to run the Semantic Analysis Engine pipeline on the Tesla T4 GPU for all data groups. As established in \Cref{s:word_embeddings}, the Topic Extraction Engine uses \texttt{GloVe} as the word embedding model as it gives a significant improvement in the semantic clustering silhouette scores. Furthermore, it also results in more efficient (faster) computation when running the pipeline for all input data with a total runtime of 414.60 seconds, which is 31.15\% lower than using \texttt{Word2Vec}. The difference in runtimes for when using \texttt{TF-IDF} and \texttt{GloVe} is trivial, however, given the 33.13\% improvement (See~\Cref{fig:word_embed}) in silhouette score of \texttt{GloVe} over \texttt{TF-IDF}, \texttt{GloVe} proves to be the best approach in terms of time efficiency and optimal clustering. 
 
 \section{Qualitative User Evaluation} \label{s:user_eval}
-In an attempt to gain a greater understanding of the performance of our tool, user testing was conducted with a focus group of 7 people, including members from DeepSearchLabs to obtain qualitative evaluation for visualised results from the Topic Extraction Engine and Semantic Triple Extraction Engine.
+In an attempt to gain a greater understanding of the performance of our tool, user testing was conducted with a focus group of 7 people, including members from Deep Search Labs to obtain qualitative evaluation for visualised results from the Topic Extraction Engine and Semantic Triple Extraction Engine.
 
 \begin{figure}[H]
 \centering     %%% not \center
