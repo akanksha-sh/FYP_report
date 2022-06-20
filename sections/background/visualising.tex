@@ -1,8 +1,8 @@
 \section{Semantic Triples Knowledge Graph}  \label{Knowledge_graph}
 
-Modelling events as a set of semantic triples is a well-established technique in the field of news summarisation. There can be different rules for extracting entities and relations from the text (in this case, news articles) which result in the extraction of different types of relationships. These form a minimal representation of the corpus, are generally of type subject $subject \rightarrow predicate \rightarrow object$ and are called SPO triples.
+Modelling events as a set of semantic triples is a well-established technique in the field of news summarisation. There can be different rules for extracting entities and relations from the text (in this case, news articles) which result in the extraction of different types of relationships. These form a minimal representation of the corpus, are generally of type $subject \rightarrow predicate \rightarrow object$ and are called SPO triples.
 
-In order to generate this triples, the text corpus can be segmented into and sentences and using the grammatical structure of the sentence, the subject, predicate and object can be extracted~\cite{retrospective_kg}~\cite{6_world2014rdf}.
+To generate this triples, the text corpus can be segmented into and sentences and using the grammatical structure of the sentence, the subject, predicate and object can be extracted~\cite{retrospective_kg}~\cite{6_world2014rdf}.
 
 An example of the SPO triple extracted from the sentence ``Elon Musk is the CEO of Tesla'' is `Elon Musk' (as subject), `CEO of' (as predicate) and `Tesla' (as object).
 
@@ -11,9 +11,9 @@ An example of the SPO triple extracted from the sentence ``Elon Musk is the CEO 
     \includegraphics[width=0.3\textwidth]{images/spo.png}
 \end{figure}
 
-These triples are usually presented using a \textbf{Knowledge Graph}. A Knowledge Graph is a semantic graph which consists of nodes (vertices) and directed edges. The `subjects' and `objects' are represented as nodes and are usually entities and/or concepts. An entity can include a real-world physical object, for instance, a location (e.g. London), person (e.g. Paul McCartney), or an organization (e.g. WHO). Concepts, on the other hand, essentially refers to the general categories (that entities can belong to) such as airlines, websites, etc.~\cite{retrospective_kg}.
+These triples are usually presented using a \textbf{Knowledge Graph}. A Knowledge Graph is a semantic graph which consists of nodes (vertices) and directed edges. The `subjects' and `objects' are represented as nodes and are usually entities and/or concepts. An entity can include a real-world physical object, for instance, a location (e.g. London), person (e.g. Paul McCartney), or an organization (e.g. WHO). Concepts, on the other hand, essentially refer to the general categories (that entities can belong to) such as airlines, websites, etc.~\cite{retrospective_kg}.
 
-The `predicates' are represented as (directed) edges in a knowledge graph and are representative of the semantic relationships between entities and/or concepts derived by the descriptions of entities which have formal semantics. These descriptions usually highlight the key information about an entity and are interlinked (i.e., the description of one entity contributes to another) thereby resulting in the formation a graph~\cite{retrospective_kg} as shown in~\Cref{example_kg}.
+The `predicates' are represented as (directed) edges in a knowledge graph and are representative of the semantic relationships between entities and/or concepts derived by the descriptions of entities which have formal semantics. These descriptions usually highlight the key information about an entity and are interlinked (i.e., the description of one entity contributes to another) thereby resulting in the formation of a graph~\cite{retrospective_kg} as shown in~\Cref{example_kg}.
 
 \begin{figure}[H]
     \centering
@@ -64,11 +64,11 @@ knowledge base, It contains structured data and supports Wikimedia projects. Wik
 % ---------------------------------------------------------------------------------------------------------
 
 
-\section{Principals of Visualisation} \label{principal_vis}
+\section{Principles of Visualisation} \label{principal_vis}
 
 For the scope of the project, there needs to be some visualisation tool to display the results of semantic analysis of news. Therefore, in this section, we look at the important considerations to build  coherent, effective visualisations. 
 
-First and foremost, it is important to understand the goal of the visualisation, what precisely is needed to be visualised and think about what type of data is required for this. This data (in this case, news articles) can then be processed to transform and summarise it, extracting key pieces of information that is determined to be essential to the application. This transformed data can then be stored in our desired format and utilised to output the visualisation.
+First and foremost, it is important to understand the goal of the visualisation, what precisely is needed to be visualised and think about what type of data is required for this. This data (in this case, news articles) can then be processed to transform and summarise it, extracting key pieces of information deemed essential to the application. This transformed data can then be stored in our desired format and utilised to output the visualisation.
 
 The following highlight the key principles of visualisation:
 
@@ -80,13 +80,13 @@ It is important to ensure that the visuals are simple and intuitive. The informa
 Standardisation of data structure and elements is needed for a good visualisation. This requires handling any complexities and discrepancies in the data as well as eliminating redundancies. Examples of this include, but are not limited to, using common abbreviations, identical scaling, consistent layouts across your data visualisations~\cite{29_bhalla_2022}. Additionally, it is important to provide context for these visualisations as well by using standardised labelling and indexing~\cite{30_vis}.
 
 \item \textbf{Scalable:}
-Scalability, in this context, refers to the ability of a visualisation to adjust with the increasing volumes of data seamlessly. This increase should have minimal impact on the speed as well as the performance of the program. Additionally, this also relates how to fit the virtualisation by dynamically scaling it to the virtual space as it grows~\cite{29_bhalla_2022}. 
+Scalability, in this context, refers to the ability of a visualisation to adjust with the increasing volumes of data seamlessly. This increase should have minimal impact on the speed as well as the performance of the program. Additionally, this also relates to how to fit the visualisation by dynamically scaling it to the virtual space as it grows~\cite{29_bhalla_2022}. 
 
 \item \textbf{Identify target audience:}
  For the visualisation to be a good representation of the data, it is important to identify the target audience and how they will interact/ use the visual. As mentioned before, exploiting visual details like size, colour, position, font etc can allow for a more intuitive design whilst directing the focus of the users to key bits of information\cite{30_vis}. 
 
 \item \textbf{Making use of interactivity:}
-It can be useful to leverage the interactivity in the visualisation, thereby allowing for a multi-faceted visualisation based on the context that the users choose. For example, if a user wants to the see key news related to the airline industry, the visualisation can zoom in to focus on the part of the visualisation specific to that sector. User interactions should be intuitive and simple to not confuse the user and discourage participation. 
+It can be useful to leverage the interactivity in the visualisation, thereby allowing for a multi-faceted visualisation based on the context that the users choose. For example, if a user wants to see the key news related to the airline industry, the visualisation can zoom in to focus on the part of the visualisation specific to that sector. User interactions should be intuitive and simple to not confuse the user and discourage participation. 
 
 \end{enumerate}
 
