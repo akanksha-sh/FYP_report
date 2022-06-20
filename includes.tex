@@ -70,6 +70,10 @@ colorlinks=true,linkcolor={blue},citecolor={blue},urlcolor={black}%
 % \setlength{\parskip}{\medskipamount}  % a little space before a \par
 
 \pagestyle{fancy}
+\fancyhead[R]{}
+
+
+
 \renewcommand{\headrulewidth}{0.1pt}
 \renewcommand{\footrulewidth}{0.1pt}
 \captionsetup{font=small,labelfont=bf}
@@ -77,10 +81,6 @@ colorlinks=true,linkcolor={blue},citecolor={blue},urlcolor={black}%
 \setlength{\parindent}{0em}  % indentation of paragraph
 \setlength{\headheight}{14pt}
 \addtolength{\topmargin}{-1pt}
-
-\newcounter{todocounter}
-\newcommand{\todonum}[2][]
-{\stepcounter{todocounter}\todo[shadow,color=teal, textcolor=white, size=\large, #1]{\thetodocounter: #2}}
 
 \newcommand{\qs}[1]{`#1'}
 \newcommand{\qd}[1]{``#1''}
